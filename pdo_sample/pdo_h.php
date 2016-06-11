@@ -1,5 +1,5 @@
 <?php
-include 'mysql_login_info.ini';
+include_once 'mysql_login_info.ini';
 
 // Define global PDO handler.
 $dbh = null;

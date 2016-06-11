@@ -10,34 +10,18 @@
 </head>
 
 <?php
-/* Sample PDO usage demo2:
+/* 
+    Sample PDO usage demo2:
 	Serch Query,
-	Besure to do all 3 steps when use, $dbh is the PDO object prepared.*/
+	Besure to do all 3 steps when use, $dbh is the PDO object prepared.
+	
+	Author: Phoenix
+    Version: 0611.2016
+*/
 
 /* 1. Import Connection head File */
 include_once 'pdo_h.php';
-
-class SearchResult {
-    public $BID;
-    public $BName;
-    public $AID;
-    public $AName;
-    public $LCode;
-    public $GCode;
-    public $GName;
-    public $BRelease;
-    public $BUpdate;
-
-    public function toHTMLTableRow() {
-    	return '  <tr>
-				    <td>'.$this->BName.'</td>
-				    <td>'.$this->AName.'</td>
-				    <td>'.$this->GName.'</td>
-				    <td>'.$this->BRelease.'</td>
-				    <td>'.$this->BUpdate.'</td>
-				 </tr>';
-    }
-}
+include_once 'frontend_classes_h.php'; // The SearchResult Class had been moved to this head file.
 
 class Search {
     function qrStringToArray ($str) {
@@ -101,6 +85,8 @@ foreach($results as $row)
 	{
 		var_dump($row);
 		echo '<br /> <br />';
+
+		echo $row->toHTMLTableRow();
 	}
 ?>
 
