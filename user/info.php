@@ -20,71 +20,89 @@
 <center><font color="orange"><h1>Book Name</h1></font></center>
 
 <center>
+
+<div id="rightb">
+<font color="orange">
+Choose your reading language:
+</font>
+<form action="#" method="post">
+<select name="lang">
+<option value="eng">English</option>
+<option value="zho">Chinese</option>
+<option value="jpn">Japanese</option>
+</select>
+<input type="submit" name="submit" value="submit" />
+</form>
+</div>
+
+
 <?php
-  include 'pdo_h.php';
-   
-  class Bookinfo{
-  public $BName;
-  public $BDesc;
-  public $AName;
-  public $ADesc;
-  public $WCount;
-  
-  public function printBName() {
-  return $this->BName;
-  }
+$language ='eng';
+if(isset($_POST['submit'])){
+$language = $_POST['lang'];
 
-  public function printBDesc() {
-
-  return 'A'.$this->BDesc;
-  }
-  }
-
-
-  db_connect();
-?>
-
-<p><font size="5" color="black">
-<?php
-$stmt = $dbh->query("SELECT BName FROM BookDetails WHERE BID='Re_Zero_Novels' AND LCode='zho' ");
-$stmt->setFetchMode(PDO::FETCH_INTO, new Bookinfo);
-foreach($stmt as $bookinfo)
-{
-    echo nl2br($bookinfo->printBName().'<br />');
 }
-
 ?>
-</font></p>
+
+
+
+<?php
+include_once "../headfiles/pdo_h.php";
+include_once "../headfiles/backend_classes_h.php";
+include_once "../headfiles/frontend_classes_h.php";
+$q = new Query;
+$BookName='Re_Zero_Novels';
+$obj = $q->getBook($BookName, $language);
+$links =  $q->getBookLinks($BookName, $language);
+?>
+
+
+<div id="footer">
+        <div id="center">
+<p><font size="4" color="orange">Available Links:</font><p>
+<font size="3" color="orange">
+<?php
+  foreach ($links as $r) {
+    echo $r->toHTMLTableRow();
+  }
+?>
+</font>
+</div>
+</div>
+
+
+
+<font size="5">
+<?php
+echo $obj->BName;
+?>
+</font>
 
 
 <p><font size="5" color="orange">Author name </font></p>
 
-<br>
+<font size="5">
+<?php
+echo $obj->AName;
+?>
+</font>
+
 
 <p><font size="5" color="orange">Book Description </font></p>
 
-<div style=width:800px;height:500px">
+<div style=width:900px;height:500px">
+<font size="3">
 <?php
-
-$stmt1 = $dbh->query("SELECT BDesc FROM BookDetails WHERE BID='Re_Zero_Novels' AND LCode='zho' ");
-$stmt1->setFetchMode(PDO::FETCH_INTO, new Bookinfo);
-
-
-foreach($stmt1 as $bookinfo)
-{
-    echo $bookinfo->printBDesc().'<br />';
-}
-
-
-db_commit();
+echo $obj->BDesc;
 ?>
+</font>
 </div>
 
 <style>
 
 #footer {
     position: absolute;
-    bottom: 5%;
+    bottom: 0%;
     width: 100%;
 }
 #center {
@@ -108,19 +126,50 @@ db_commit();
 
 #rightb {
     position: absolute;
-    right:38%;
-    bottom:15%;
+    right:42.5%;
+    bottom:20%;
+    margin: 0 auto;
+}
+
+#gr {
+    position: absolute;
+    left:15%;
+    top:12%;
+    margin: 0 auto;
+}
+
+#wc {
+    position: absolute;
+    left:15%;
+    top:17%;
+    margin: 0 auto;
+}
+
+#rl {
+    position: absolute;
+    left:15%;
+    top:22%;
+    margin: 0 auto;
+}
+
+#ts {
+    position: absolute;
+    left:15%;
+    top:27%;
+    margin: 0 auto;
+}
+
+#ud {
+    position: absolute;
+    left:15%;
+    top:32%;
     margin: 0 auto;
 }
 
 </style>
 
 
-<div id="footer">
-        <div id="center">
-<img src="images/readlink.png" alt="" class="img-circle">
-</div>
-</div>
+
 
 
 <div id="rightu1">
@@ -131,17 +180,66 @@ db_commit();
 <img src="images/searchauth.png" alt="" class="img-circle">
 </div>
 
-
-<div id="rightb">
-<font color="orange">
-Choose your reading language:
-</font>
-<select>
-<option value="Eng">English</option>
-<option value="Chi">Chinese</option>
-<option value="Jap">Japanese</option>
-</select>
+<div id="gr">
+<font size="3" color="orange">word count: </font>
+<?php
+if($obj->GName!=NULL){
+echo $obj->GName;
+}else{
+echo 'No information';
+}
+?>
 </div>
+
+
+<div id="wc">
+<font size="3" color="orange">word count: </font>
+<?php
+if($obj->WCount!=NULL){
+echo $obj->WCount;
+}else{
+echo 'No information';
+}
+?>
+</div>
+
+<div id="rl">
+<font size="3" color="orange">original release:</font>
+<?php
+if($obj->ORelease!=0000-00-00){
+echo $obj->ORelease;
+}
+else{
+echo 'No information';
+}
+?>
+</div>
+
+<div id="ts">
+<font size="3" color="orange">Translated Version:</font>
+<?php
+if($obj->BRelease!=0000-00-00){
+echo $obj->BRelease;
+}
+else{
+echo 'No information';
+}
+?>
+</div>
+
+
+<div id="ud">
+<font size="3" color="orange">Update date:</font>
+<?php
+if($obj->BUpdate!=0000-00-00){
+echo $obj->BUpdate;
+}
+else{
+echo 'No information';
+}
+?>
+</div>
+
 
 </center>
 
