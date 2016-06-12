@@ -6,7 +6,7 @@
 	- Call _db_error(PDO &$dbh, $ex) in Catch block to deal with PDO connection exceptions.
 
     Author: Phoenix
-    Version: 0611.2016
+    Version: 0612.2016
 */
 include 'mysql_login_info.ini';
 
@@ -26,8 +26,9 @@ function _db_commit(PDO &$dbh){
 }
 
 // Exception handling function
-function _db_error(PDO &$dbh, $ex){ 
- 	$dbh->rollBack();
+function _db_error(&$dbh, $ex){ 
+ 	if (get_class($dbh) == 'PDO')
+ 		$dbh->rollBack();
   	echo "ERROR!: " , $ex->getMessage(), "\n";
   	$dbh = null;
   	die();
