@@ -3,7 +3,7 @@
     This is the class declaration head file for back end query operations.
 
     Author: Phoenix
-    Version: 0611.2016
+    Version: 0612.2016
 
     Classes Index:
     - Query Class: all the query methods that construct an object from the query.
@@ -38,11 +38,12 @@ class Query {
 	// Return:	An array of SearchResult objects.
 	// Notes:	- The input string can be in any language, and the result shows only in the declared language.
 	// 			- All $ and ; symbols in the string will be removed prior to the query for security reason, 
+	//			(If no matching result returned) Return a dummmy array with one SearchResult object.
 	public function search($qr_string, $lCode){
 		$kwds = $this->qrStringToArray($qr_string);
 		// *Connect to the database
 		try{$dbh = _db_connect();
-
+		
 		$stmt = null;
 		if (!$kwds){
 			$stmt = $dbh->prepare(
@@ -69,18 +70,23 @@ class Query {
 			$stmt->bindParam(':lang', $lCode);
 			$stmt->execute(array(':q1' => "%$kwds[0]%", ':q2' => "%$kwds[1]%", ':q3' => "%$kwds[2]%", ':lang' => $lCode));
 		}
-		$stmt->setFetchMode(PDO::FETCH_INTO, new SearchResult);
-
 		// *Disconnect from the database
 		_db_commit($dbh);} catch(Exception $e) {_db_error($dbh,$e);}
 
-		return $stmt;
+		$stmt->setFetchMode(PDO::FETCH_INTO, new SearchResult);
+		$results = $stmt->fetchAll();
+		// Create dummy entry if nothing returned from the query
+		if (!$results)
+			$results = array(new DummySR);
+
+		return $results;
 	}
 
 	// Query detailed information for a book
 	// Argument:$BID, the BID of the Book
 	// 			$lCode is the language code to display the results in.
 	// Return:	An BookDetail objects.
+	//			(If no matching result returned) Return a BookDetail object.
 	// Exception:	It returns bool(false) if the book is not in the database
 	public function getBook($BID, $lCode){
 		// *Connect to the database
@@ -97,7 +103,12 @@ class Query {
 		// *Disconnect from the database
 		_db_commit($dbh);} catch(Exception $e) {_db_error($dbh,$e);}
 
-		return $stmt->fetchObject('BookDetail');
+		$obj = $stmt->fetchObject('BookDetail');
+		// Create dummy entry if nothing returned from the query
+		if (!$obj)
+			$obj = new DummyBD;
+
+		return $obj;
 	}
 
 
@@ -105,6 +116,7 @@ class Query {
 	// Argument:$AID, the AID of the author
 	// 			$lCode is the language code to display the results in.
 	// Return:	An AuthorDetail objects.
+	//			(If no matching result returned) Return a BookDetail object.
 	// Exception:	It returns bool(false) if the author is not in the database
 	public function getAuthor($AID, $lCode){
 		// *Connect to the database
@@ -121,13 +133,19 @@ class Query {
 		// *Disconnect from the database
 		_db_commit($dbh);} catch(Exception $e) {_db_error($dbh,$e);}
 
-		return $stmt->fetchObject('AuthorDetail');
+		$obj = $stmt->fetchObject('AuthorDetail');
+		// Create dummy entry if nothing returned from the query
+		if (!$obj)
+			$obj = new DummyAD;
+
+		return $obj;
 	}
 
 	// Query to get links for a book
 	// Argument:$BID, the BID of the Book
 	// 			$lCode is the language code to display the results in.
 	// Return:	An array of BookLink objects.
+	//			(If no matching result returned) Return a dummmy array with one BookLink object..
 	public function getBookLinks($BID, $lCode){
 		// *Connect to the database
 		try{$dbh = _db_connect();
@@ -142,14 +160,20 @@ class Query {
 
 		// *Disconnect from the database
 		_db_commit($dbh);} catch(Exception $e) {_db_error($dbh,$e);}
-
+		
 		$stmt->setFetchMode(PDO::FETCH_INTO, new BookLink);
-		return $stmt;
+		$results = $stmt->fetchAll();
+		// Create dummy entry if nothing returned from the query
+		if (!$results)
+			$results = array(new DummyBL);
+		
+		return $results;
 	}
 
 	// Query to get comments for a book
 	// Argument:$BID, the BID of the Book
 	// Return:	An array of Comment objects.
+	//			(If no matching result returned) Return a dummmy array with one Comment object..
 	public function getBookComments($BID){
 		// *Connect to the database
 		try{$dbh = _db_connect();
@@ -166,12 +190,17 @@ class Query {
 		_db_commit($dbh);} catch(Exception $e) {_db_error($dbh,$e);}
 
 		$stmt->setFetchMode(PDO::FETCH_INTO, new Comment);
-		return $stmt;
+		$results = $stmt->fetchAll();
+		if (!$results)
+			$results = array(new DummyCMT);
+
+		return $results;
 	}
 
 	// Query to get comments for an author
 	// Argument:$AID, the AID of the author
 	// Return:	An array of Comment objects.
+	//			(If no matching result returned) Return a dummmy array with one Comment object..
 	public function getAuthorComments($AID){
 		// *Connect to the database
 		try{$dbh = _db_connect();
@@ -188,7 +217,11 @@ class Query {
 		_db_commit($dbh);} catch(Exception $e) {_db_error($dbh,$e);}
 
 		$stmt->setFetchMode(PDO::FETCH_INTO, new Comment);
-		return $stmt;
+		$results = $stmt->fetchAll();
+		if (!$results)
+			$results = array(new DummyCMT);
+
+		return $results;
 	}
 }
 ?>

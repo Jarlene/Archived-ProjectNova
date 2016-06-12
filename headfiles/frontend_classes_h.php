@@ -4,7 +4,7 @@
     Quary classes not included.
 
     Author: Phoenix
-    Version: 0611.2016
+    Version: 0612.2016
 
     Classes Index:
         - SearchResult: Represent a single row in the search results
@@ -12,6 +12,7 @@
         - BookLink: Represent a single row of the links for the book.
         - AuthorDetail: Represent an author with all information needed for an Author Detail Page, EXCEPT COMMENTS.
         - Commnet: Represent a single comment for a book or an author.
+     - The Dummy* classes are all subclasses to the classes above, used for no result case return.
 */
 
 class SearchResult {
@@ -36,6 +37,15 @@ class SearchResult {
                     <td><a href="'.$this->FilterByGenreURL.'?gcode='.$this->GCode.'">'.$this->GName.'</a></td>
                     <td>'.$this->BRelease.'</td>
                     <td>'.$this->BUpdate.'</td>
+                </tr>';
+    }
+}
+
+// This class is for the case there is no result found.
+class DummySR extends SearchResult{
+    public function toHTMLTableRow(){
+        return '<tr>
+                    <td colspan = "42">NO MATCH!</td>
                 </tr>';
     }
 }
@@ -97,6 +107,13 @@ class BookDetail {
     }
 }
 
+// This class is for the case there is no result found.
+class DummyBD extends BookDetail{
+    public function toHTMLDivision(){
+        return  '<h2>404. Ops, No such book！</h2>';
+    }
+}
+
 class BookLink {
     public $URL = '-';
     public $LType = '-';
@@ -109,6 +126,14 @@ class BookLink {
     }
 }
 
+// This class is for the case there is no result found.
+class DummyBL extends BookLink{
+    public function toHTMLTableRow(){
+        return '<tr>
+                    <td colspan = "42">NO LINK FOR THIS VERSION YET!</td>
+                </tr>';
+    }
+}
 
 class AuthorDetail {
     public $AID = '-';
@@ -130,6 +155,14 @@ class AuthorDetail {
     }
 }
 
+// This class is for the case there is no result found.
+class DummyAD extends AuthorDetail{
+    public function toHTMLDivision(){
+        return  '<h2>404. Ops, no such author！</h2>';
+    }
+}
+
+
 class Comment {
     public $timeStamp = '-';
     public $Content = '-';
@@ -137,6 +170,14 @@ class Comment {
     public function toHTMLTableRow(){
         return '<tr>
                     <td><blockquote>'.$this->Content.'</blockquote><br>'.$this->timeStamp.'</td>
+                </tr>';
+    }
+}
+// This class is for the case there is no result found.
+class DummyCMT extends Comment{
+    public function toHTMLTableRow(){
+        return '<tr>
+                    <td colspan = "42"> - No commnet yet.</td>
                 </tr>';
     }
 }
