@@ -1,23 +1,29 @@
 <?php
-/* 
-    Sample PDO usage demo2:
-	Serch Query,
-	Besure to do all 3 steps when use, $dbh is the PDO object prepared.
-	
-	Author: Phoenix
-    Version: 0611.2016
-*/
+/*
+    This is the class declaration head file for back end query operations.
 
-/* 1. Import Connection head File */
+    Author: Phoenix
+    Version: 0611.2016
+
+    Classes Index:
+    - Query Class: all the query methods that construct an object from the query.
+    	- qrStringToArray($str): A helper function that converts $str into array of strings.
+        - search($qr_string, $lCode): Searches with keywords in $qr_string and returns an array of SearchResult objects in $lCode language.
+        - getBook($BID, $lCode): Gets book information and returns a BookDetail object in $lCode language.
+        - getAuthor($AID, $lCode): Gets author information and returns an AuthorDetail object in $lCode language.
+        - getBookLinks($BID, $lCode): Gets the links for the book and returns an array of BookLink objects in $lCode language.
+        - getBookComments($BID): Gets comments for the book and returns an array of Comment objects.
+        - getAuhtorComments($BID): Gets comments for the author and returns an array of Comment objects.
+*/
 include_once 'pdo_h.php';
-include_once 'frontend_classes_h.php'; // The SearchResult Class had been moved to this head file.
+include_once 'frontend_classes_h.php';
 
 class Query {
 
 	// A helper function that removes all  $ and ; symbols and splits the input string into an array of 3 strings.
 	// Argument:$str, an string
 	// Return:	An array of strings with at most 3 elements.
-    function qrStringToArray ($str) {
+    private function qrStringToArray ($str) {
 	    if (empty($str)) return false;
 	    mb_internal_encoding("UTF-8");
 	    $str = mb_ereg_replace('[;\$]','', $str);
@@ -137,44 +143,52 @@ class Query {
 		// *Disconnect from the database
 		_db_commit($dbh);} catch(Exception $e) {_db_error($dbh,$e);}
 
-		$stmt->setFetchMode(PDO::FETCH_INTO, new SearchResult);
+		$stmt->setFetchMode(PDO::FETCH_INTO, new BookLink);
+		return $stmt;
+	}
+
+	// Query to get comments for a book
+	// Argument:$BID, the BID of the Book
+	// Return:	An array of Comment objects.
+	public function getBookComments($BID){
+		// *Connect to the database
+		try{$dbh = _db_connect();
+
+		$stmt = $dbh->prepare(
+			"SELECT TStamp, Content
+			FROM CMTBooks	
+            WHERE BID = :bid
+            ORDER BY TStamp DESC");
+		$stmt->bindParam(':bid', $BID);
+		$stmt->execute();
+
+		// *Disconnect from the database
+		_db_commit($dbh);} catch(Exception $e) {_db_error($dbh,$e);}
+
+		$stmt->setFetchMode(PDO::FETCH_INTO, new Comment);
+		return $stmt;
+	}
+
+	// Query to get comments for an author
+	// Argument:$AID, the AID of the author
+	// Return:	An array of Comment objects.
+	public function getAuthorComments($AID){
+		// *Connect to the database
+		try{$dbh = _db_connect();
+
+		$stmt = $dbh->prepare(
+			"SELECT TStamp, Content
+			FROM CMTAuthors	
+            WHERE AID = :aid
+            ORDER BY TStamp DESC");
+		$stmt->bindParam(':aid', $AID);
+		$stmt->execute();
+
+		// *Disconnect from the database
+		_db_commit($dbh);} catch(Exception $e) {_db_error($dbh,$e);}
+
+		$stmt->setFetchMode(PDO::FETCH_INTO, new Comment);
 		return $stmt;
 	}
 }
-
-
-// Execution codes:
-$q = new Query;
-echo "<h1>Search</h1>";
-$results = $q->search( '劉慈欣', 'eng');
-foreach($results as $row)
-	{
-		var_dump($row);
-		echo '<br /> <br />';
-
-		echo $row->toHTMLTableRow();
-	}
-
-
-echo "<h1>getBook</h1>";
-$obj = $q->getBook('The_Three_Body_Novels', 'zho');
-var_dump($obj);
-echo $obj->toHTMLDivision();
-
-echo "<h1>getAuthor</h1>";
-$obj = $q->getAuthor('Liu_Cixin', 'jpn');
-var_dump($obj);
-echo $obj->toHTMLDivision();
-
-
-echo "<h1>getBookLinks</h1>";
-$results =  $q->getBookLinks('The_Three_Body_Novels', 'eng');
-foreach($results as $row)
-	{
-		var_dump($row);
-		echo '<br /> <br />';
-
-		echo $row->toHTMLTableRow();
-	}
-
 ?>

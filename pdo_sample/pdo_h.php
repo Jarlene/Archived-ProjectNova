@@ -1,40 +1,36 @@
 <?php
-include_once 'mysql_login_info.ini';
+/*
+	PDO connection function
+	- Call _db_connect() to initiate a connection to the database, and return a PDO object.
+	- Invoke _db_commit(PDO &$dbh) to commit any change to the database and close connection.
+	- Call _db_error(PDO &$dbh, $ex) in Catch block to deal with PDO connection exceptions.
 
-// Define global PDO handler.
-$dbh = null;
+    Author: Phoenix
+    Version: 0611.2016
+*/
+include 'mysql_login_info.ini';
 
-// Exception handler
-function exception_handler($exception) {
-  if ($GLOBALS['dbh']) $GLOBALS['dbh']->rollBack();
-  echo "ERROR!: " , $exception->getMessage(), "\n";
-  $GLOBALS['dbh'] = null;
-  die();
-}
-set_exception_handler('exception_handler');
 
 // Initialize PDO object and conncet to the server.
 // Open transation. Must call commit() after.
-function db_connect(){
-	$GLOBALS['dbh'] = new PDO('mysql:host=localhost;dbname=nova;charset=utf8', MYSQL_DB_USER, MYSQL_DB_PASS);
-	$GLOBALS['dbh']->beginTransaction();
-	return $GLOBALS['dbh'];
-}
-
-// Commit and Close databae connection
-function db_commit(){
-	$GLOBALS['dbh']->commit();
-	$GLOBALS['dbh'] = null;
-}
-
-
 function _db_connect(){
 	$dbh = new PDO('mysql:host=localhost;dbname=nova;charset=utf8', MYSQL_DB_USER, MYSQL_DB_PASS);
 	$dbh->beginTransaction();
 	return $dbh;
 }
+
+// Commit and Close databae connection
 function _db_commit(PDO &$dbh){ 
 	$dbh->commit();
 	$dbh = null; 
 }
+
+// Exception handling function
+function _db_error(PDO &$dbh, $ex){ 
+ 	$dbh->rollBack();
+  	echo "ERROR!: " , $ex->getMessage(), "\n";
+  	$dbh = null;
+  	die();
+}
+
 ?>
