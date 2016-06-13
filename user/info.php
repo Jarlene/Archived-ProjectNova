@@ -34,19 +34,7 @@ h1{
 <center>
 
 
-<div id="rightb">
-<font color="orange">
-Choose your reading language:
-</font>
-<form action="#" method="post">
-<select name="lang">
-<option value="eng">English</option>
-<option value="zho">Chinese</option>
-<option value="jpn">Japanese</option>
-</select>
-<input type="submit" name="submit" value="submit" />
-</form>
-</div>
+
 
 
 <?php
@@ -75,6 +63,22 @@ $comments = $q->getBookComments($BID);
     echo $obj->toHTMLDivision();
 ?>
 </div>
+
+
+<div id="rightb">
+<font color="orange">
+Choose your reading language:
+</font>
+<form action="#" method="post">
+<select name="lang">
+<option value="eng">English</option>
+<option value="zho">Chinese</option>
+<option value="jpn">Japanese</option>
+</select>
+<input type="submit" name="submit" value="submit" />
+</form>
+</div>
+
 
 <!-- Bookmark Links Here  -->
 <div id="AddBookMark">
@@ -111,7 +115,7 @@ $comments = $q->getBookComments($BID);
 <div id="AddComments">
    <font color="orange"><p>add your comment:</p></font>
    <form action="" method="post">
-   <textarea name="comment" style="width:400px;height:60px;">Your comments</textarea>
+   <textarea name="comment" style="width:400px;height:60px;">Enter your comment</textarea>
    <input type="submit" value="Submit" />
    </form>
 
