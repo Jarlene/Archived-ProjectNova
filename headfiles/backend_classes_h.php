@@ -227,5 +227,40 @@ class Query {
 		// return $results;
 		return $stmt;
 	}
+
+	// Query to add an comment
+	public function addBookComment($BID, $str){
+		try{$dbh = _db_connect();
+
+		$stmt = $dbh->prepare(
+			"INSERT INTO CMTBooks(TStamp, BID, Content)
+			VALUES (NOW(), :bid, :cmt)");
+		$stmt->bindParam(':bid', $BID);
+		$stmt->bindParam(':cmt', $str);
+		$stmt->execute();
+
+		// *Disconnect from the database
+		_db_commit($dbh);} catch(Exception $e) {_db_error($dbh,$e);}
+
+		return true;
+	}
+
+	// Query to add an comment
+	public function addAuthorComment($AID, $str){
+		try{$dbh = _db_connect();
+
+		$stmt = $dbh->prepare(
+			"INSERT INTO CMTAuthors(TStamp, AID, Content)
+			VALUES (NOW(), :aid, :cmt)");
+		$stmt->bindParam(':aid', $AID);
+		$stmt->bindParam(':cmt', $str);
+		$stmt->execute();
+
+		// *Disconnect from the database
+		_db_commit($dbh);} catch(Exception $e) {_db_error($dbh,$e);}
+
+		return true;
+	}
 }
+
 ?>
