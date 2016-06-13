@@ -14,10 +14,7 @@ require_once('../connect.php');
 $username = $_COOKIE['user'];
  $insertsql = "SELECT * FROM Members WHERE username='$username'";
  $res = mysqli_query($connect,$insertsql);
-if(!isset($_COOKIE['user'])) {
-    echo "Cookie named '" . 'user' . "' is not set!";
-} else if(!$res)
- {
+if(!$res){
     echo '<script type="text/javascript">';
     echo 'alert("the user does not exist or has expired.");';
     echo 'window.location.href = "index.php";';
