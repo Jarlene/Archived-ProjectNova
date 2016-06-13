@@ -22,7 +22,8 @@ if(!$res){
   }else{
   	  echo "Welcome to nova " . $_COOKIE['user'] . "!!!!";
   	  echo "<a href='index.php'> signout </a>";
-
+      echo "<a href='index.php'> favourite </a>";
+      echo "<a href='index.php'> search </a>";
   }
   mysqli_free_result($res);
   mysqli_close($connect);
