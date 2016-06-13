@@ -73,7 +73,9 @@ $comments = $q->getBookComments($BID);
 </div>
 
 <!-- Bookmark Links Here  -->
-<a href="Bookmark">BookMark</a>
+<div id="AddBookMark">
+<a href="www.baidu.com"><img src="images/addfavoriate.png" alt="" class="img-circle"></a>
+</div>
 
 <div id="BookLinks">
 <table id="BookLinksTable">
@@ -102,8 +104,12 @@ $comments = $q->getBookComments($BID);
 
 
 <!-- Add new comments here  -->
-<div>
-    <input type="" name=""></input>
+<div id="AddComments">
+   <font color="orange"><p>add your comment:</p></font>
+   <form action="../user/addcomment" method="post">
+   <textarea name="a" style="width:400px;height:60px;">Your comments</textarea>
+   <input type="submit" value="Submit" />
+   </form>
 </div>
 
 </center>
