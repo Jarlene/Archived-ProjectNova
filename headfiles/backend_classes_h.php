@@ -74,12 +74,13 @@ class Query {
 		_db_commit($dbh);} catch(Exception $e) {_db_error($dbh,$e);}
 
 		$stmt->setFetchMode(PDO::FETCH_INTO, new SearchResult);
-		$results = $stmt->fetchAll();
-		// Create dummy entry if nothing returned from the query
-		if (!$results)
-			$results = array(new DummySR);
+		// $results = $stmt->fetchAll();
+		// // Create dummy entry if nothing returned from the query
+		// if (!$results)
+		// 	$results = array(new DummySR);
 
-		return $results;
+		// return $results;
+		return $stmt;
 	}
 
 	// Query detailed information for a book
@@ -162,12 +163,13 @@ class Query {
 		_db_commit($dbh);} catch(Exception $e) {_db_error($dbh,$e);}
 		
 		$stmt->setFetchMode(PDO::FETCH_INTO, new BookLink);
-		$results = $stmt->fetchAll();
-		// Create dummy entry if nothing returned from the query
-		if (!$results)
-			$results = array(new DummyBL);
+		// $results = $stmt->fetchAll();
+		// // Create dummy entry if nothing returned from the query
+		// if (!$results)
+		// 	$results = array(new DummyBL);
 		
-		return $results;
+		// return $results;
+		return $stmt;
 	}
 
 	// Query to get comments for a book
@@ -190,11 +192,12 @@ class Query {
 		_db_commit($dbh);} catch(Exception $e) {_db_error($dbh,$e);}
 
 		$stmt->setFetchMode(PDO::FETCH_INTO, new Comment);
-		$results = $stmt->fetchAll();
-		if (!$results)
-			$results = array(new DummyCMT);
+		// $results = $stmt->fetchAll();
+		// if (!$results)
+		// 	$results = array(new DummyCMT);
 
-		return $results;
+		// return $results;
+		return $stmt;
 	}
 
 	// Query to get comments for an author
@@ -217,11 +220,12 @@ class Query {
 		_db_commit($dbh);} catch(Exception $e) {_db_error($dbh,$e);}
 
 		$stmt->setFetchMode(PDO::FETCH_INTO, new Comment);
-		$results = $stmt->fetchAll();
-		if (!$results)
-			$results = array(new DummyCMT);
+		// $results = $stmt->fetchAll();
+		// if (!$results)
+		// 	$results = array(new DummyCMT);
 
-		return $results;
+		// return $results;
+		return $stmt;
 	}
 }
 ?>
