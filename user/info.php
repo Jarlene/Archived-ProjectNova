@@ -79,11 +79,14 @@ Choose your reading language:
 </form>
 </div>
 
+<br>
 
 <!-- Bookmark Links Here  -->
 <div id="AddBookMark">
 <a href="www.baidu.com"><img src="images/addfavoriate.png" alt="" class="img-circle"></a>
 </div>
+
+<br>
 
 <div id="BookLinks">
 <table id="BookLinksTable">
