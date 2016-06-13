@@ -106,8 +106,8 @@ $comments = $q->getBookComments($BID);
 <!-- Add new comments here  -->
 <div id="AddComments">
    <font color="orange"><p>add your comment:</p></font>
-   <form action="../user/addcomment" method="post">
-   <textarea name="a" style="width:400px;height:60px;">Your comments</textarea>
+   <form action="../user/testc.php" method="post">
+   <textarea name="comment" style="width:400px;height:60px;">Your comments</textarea>
    <input type="submit" value="Submit" />
    </form>
 </div>
