@@ -26,7 +26,7 @@ class SearchResult {
     public $BRelease = '-';
     public $BUpdate = '-';
 
-    private $BookDetailsURL = 'test.php';
+    private $BookDetailsURL = 'info.php';
     private $AuthorDetailsURL = 'placeholder.php';
     private $FilterByGenreURL = 'placeholder.php';
 
