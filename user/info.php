@@ -6,20 +6,33 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Welcome to nova!</title>
-
 <link href="css/bootstrap.min.css" rel="stylesheet">
 <link href="css/signin.css" rel="stylesheet">
 
+<style>
+table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+    text-align: center;
+    color: orange;
+}
+th, td {
+    padding: 5px;
+}
+table{
+    width: 70%;
+}
+h1{
+    font color="orange";
+}
+</style>
 </head>
 
-
 <body>
-
-<br> </br>
-
-<center><font color="orange"><h1>Book Name</h1></font></center>
+<br>
 
 <center>
+
 
 <div id="rightb">
 <font color="orange">
@@ -37,208 +50,57 @@ Choose your reading language:
 
 
 <?php
-$language ='eng';
-if(isset($_POST['submit'])){
-$language = $_POST['lang'];
-
-}
-?>
-
-
-
-<?php
 include_once "../headfiles/pdo_h.php";
 include_once "../headfiles/backend_classes_h.php";
 include_once "../headfiles/frontend_classes_h.php";
+
+$language ='eng';
+if(isset($_POST['submit'])){
+$language = $_POST['lang'];
+}
+
 $q = new Query;
-$BookName='Re_Zero_Novels';
-$obj = $q->getBook($BookName, $language);
-$links =  $q->getBookLinks($BookName, $language);
+$BID='Re_Zero_Novels';
+$obj = $q->getBook($BID, $language);
+$links =  $q->getBookLinks($BID, $language);
+$comments = $q->getBookComments($BID);
 ?>
 
-
-<div id="footer">
-        <div id="center">
-<p><font size="4" color="orange">Available Links:</font><p>
-<font size="3" color="orange">
+<div id="BookDetail">
 <?php
-  foreach ($links as $r) {
-    echo $r->toHTMLTableRow();
-  }
+    echo $obj->toHTMLDivision();
 ?>
-</font>
-</div>
 </div>
 
+<!-- Bookmark Links Here  -->
+<a href="Bookmark">BookMark</a>
 
-
-<font size="5">
+<div id="BookLinks">
+<table id="BookLinksTable">
+  <caption color="orange">Available Links:</caption>
+  <tr>
+    <th>Type</th>
+    <th>URL</th>
+  </tr>
 <?php
-echo $obj->BName;
-?>
-</font>
-
-
-<p><font size="5" color="orange">Author name </font></p>
-
-<font size="5">
-<?php
-echo $obj->AName;
-?>
-</font>
-
-
-<p><font size="5" color="orange">Book Description </font></p>
-
-<div style=width:900px;height:500px">
-<font size="3">
-<?php
-echo $obj->BDesc;
-?>
-</font>
-</div>
-
-<style>
-
-#footer {
-    position: absolute;
-    bottom: 0%;
-    width: 100%;
-}
-#center {
-    width: 500px;
-    margin: 0 auto;
-}
-
-#rightu1 {
-    position: absolute;
-    right:3%;
-    top:10%;
-    margin: 0 auto;
-}
-
-#rightu2 {
-    position: absolute;
-    right:2%;
-    top:20%;
-    margin: 0 auto;
-}
-
-#rightb {
-    position: absolute;
-    right:42.5%;
-    bottom:20%;
-    margin: 0 auto;
-}
-
-#gr {
-    position: absolute;
-    left:15%;
-    top:12%;
-    margin: 0 auto;
-}
-
-#wc {
-    position: absolute;
-    left:15%;
-    top:17%;
-    margin: 0 auto;
-}
-
-#rl {
-    position: absolute;
-    left:15%;
-    top:22%;
-    margin: 0 auto;
-}
-
-#ts {
-    position: absolute;
-    left:15%;
-    top:27%;
-    margin: 0 auto;
-}
-
-#ud {
-    position: absolute;
-    left:15%;
-    top:32%;
-    margin: 0 auto;
-}
-
-</style>
-
-
-
-
-
-<div id="rightu1">
-<img src="images/addfavoriate.png" alt="" class="img-circle">
-</div>
-
-<div id="rightu2">
-<img src="images/searchauth.png" alt="" class="img-circle">
-</div>
-
-<div id="gr">
-<font size="3" color="orange">word count: </font>
-<?php
-if($obj->GName!=NULL){
-echo $obj->GName;
-}else{
-echo 'No information';
-}
+    foreach ($links as $r) {
+        echo $r->toHTMLTableRow();
+    }
 ?>
 </div>
 
-
-<div id="wc">
-<font size="3" color="orange">word count: </font>
-<?php
-if($obj->WCount!=NULL){
-echo $obj->WCount;
-}else{
-echo 'No information';
-}
-?>
-</div>
-
-<div id="rl">
-<font size="3" color="orange">original release:</font>
-<?php
-if($obj->ORelease!=0000-00-00){
-echo $obj->ORelease;
-}
-else{
-echo 'No information';
-}
-?>
-</div>
-
-<div id="ts">
-<font size="3" color="orange">Translated Version:</font>
-<?php
-if($obj->BRelease!=0000-00-00){
-echo $obj->BRelease;
-}
-else{
-echo 'No information';
-}
-?>
+<div id="BookComments">
+<table id="BookCommentTable">
+  <caption color="orange">Comments:</caption>
+    <?php
+        foreach ($comments as $r) {
+            echo $r->toHTMLTableRow();
+        }
+    ?>
 </div>
 
 
-<div id="ud">
-<font size="3" color="orange">Update date:</font>
-<?php
-if($obj->BUpdate!=0000-00-00){
-echo $obj->BUpdate;
-}
-else{
-echo 'No information';
-}
-?>
-</div>
+<!-- Add new comments here  -->
 
 
 </center>
