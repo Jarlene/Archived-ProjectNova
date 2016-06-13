@@ -14,7 +14,7 @@ require_once('../connect.php');
 $username = $_COOKIE['user'];
  $insertsql = "SELECT * FROM Members WHERE username='$username'";
  $res = mysqli_query($connect,$insertsql);
-if(!$res){
+if($res){
     echo '<script type="text/javascript">';
     echo 'alert("the user does not exist or has expired.");';
     echo 'window.location.href = "index.php";';
@@ -44,7 +44,7 @@ if(!$res){
       <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Home <span class="caret"></span></a>
         <ul class="dropdown-menu">
          <li><a>'. $_COOKIE['user'] .'</a></li>
-         <li><a href="#">signout</a></li> 
+         <li><a href="index.php">signout</a></li> 
         </ul>
       </li>
       
