@@ -14,13 +14,14 @@ require_once('../connect.php');
 $username = $_COOKIE['user'];
  $insertsql = "SELECT * FROM Members WHERE username='$username'";
  $res = mysqli_query($connect,$insertsql);
-if(!isset($_COOKIE['user'])) {
-    echo "Cookie named '" . 'user' . "' is not set!";
-} else if(!$res)
- {
-    echo "Cookie '" . 'user' . "' is set!<br>";
+if(!isset($_COOKIE['user'])^!$res){
+ 
+    echo '<script type="text/javascript">';
+    echo 'alert("the user does not exist or has expired.");';
+    echo 'window.location.href = "index.php";';
+    echo '</script>'; 
   }else{
-  	  echo "Welcome to nova " . $_COOKIE['user'];
+  	  echo "Welcome to nova, " . $_COOKIE['user'] . "!!!!";
   }
   mysqli_free_result($res);
   mysqli_close($connect);
