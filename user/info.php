@@ -54,14 +54,18 @@ Choose your reading language:
 include_once "../headfiles/backend_classes_h.php";
 //include_once "../headfiles/frontend_classes_h.php";
 
-$language ='eng';
+$language =$_GET["lcode"];
+$language =substr($language, 1,-1);
+//$language ='eng';
 if(isset($_POST['submit'])){
 $language = $_POST['lang'];
 }
 
 $q = new Query;
-$BID='Re_Zero_Novels';
-$obj = $q->getBook($BID, $language);
+$BID=$_GET["bid"];
+$BID=substr($BID, 1,-1);
+//$BID='Re_Zero_Novels';
+$obj = $q->getBook($BID,$language);
 $links =  $q->getBookLinks($BID, $language);
 $comments = $q->getBookComments($BID);
 ?>
