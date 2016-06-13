@@ -106,10 +106,25 @@ $comments = $q->getBookComments($BID);
 <!-- Add new comments here  -->
 <div id="AddComments">
    <font color="orange"><p>add your comment:</p></font>
-   <form action="../user/testc.php" method="post">
+   <form action="" method="post">
    <textarea name="comment" style="width:400px;height:60px;">Your comments</textarea>
    <input type="submit" value="Submit" />
    </form>
+
+<font color="orange">
+<?php
+if(isset($_POST['comment'])){
+$status=$q->addBookComment($BID,$_POST["comment"]);
+if(!$status){
+  echo "upload comments error";
+}else{
+  echo "upload comments sccuessfull!";
+}
+}
+
+?>
+</font>
+
 </div>
 
 </center>
