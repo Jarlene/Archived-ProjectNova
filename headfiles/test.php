@@ -21,6 +21,8 @@ if(!$res){
     echo '</script>'; 
   }else{
   	  echo "Welcome to nova " . $_COOKIE['user'] . "!!!!";
+  	  echo "<a href='index.php'> signout </a>";
+
   }
   mysqli_free_result($res);
   mysqli_close($connect);
