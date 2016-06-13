@@ -34,6 +34,37 @@ h1{
 <center>
 
 
+
+
+
+<?php
+//include_once "../headfiles/pdo_h.php";
+include_once "../headfiles/backend_classes_h.php";
+//include_once "../headfiles/frontend_classes_h.php";
+
+$language =$_GET["lcode"];
+$language =substr($language, 1,-1);
+//$language ='eng';
+if(isset($_POST['submit'])){
+$language = $_POST['lang'];
+}
+
+$q = new Query;
+$BID=$_GET["bid"];
+$BID=substr($BID, 1,-1);
+//$BID='Re_Zero_Novels';
+$obj = $q->getBook($BID,$language);
+$links =  $q->getBookLinks($BID, $language);
+$comments = $q->getBookComments($BID);
+?>
+
+<div id="BookDetail">
+<?php
+    echo $obj->toHTMLDivision();
+?>
+</div>
+
+
 <div id="rightb">
 <font color="orange">
 Choose your reading language:
@@ -48,34 +79,14 @@ Choose your reading language:
 </form>
 </div>
 
-
-<?php
-include_once "../headfiles/pdo_h.php";
-include_once "../headfiles/backend_classes_h.php";
-include_once "../headfiles/frontend_classes_h.php";
-
-$language ='eng';
-if(isset($_POST['submit'])){
-$language = $_POST['lang'];
-}
-
-$q = new Query;
-$BID='Re_Zero_Novels';
-$obj = $q->getBook($BID, $language);
-$links =  $q->getBookLinks($BID, $language);
-$comments = $q->getBookComments($BID);
-?>
-
-<div id="BookDetail">
-<?php
-    echo $obj->toHTMLDivision();
-?>
-</div>
+<br>
 
 <!-- Bookmark Links Here  -->
 <div id="AddBookMark">
 <a href="www.baidu.com"><img src="images/addfavoriate.png" alt="" class="img-circle"></a>
 </div>
+
+<br>
 
 <div id="BookLinks">
 <table id="BookLinksTable">
@@ -107,7 +118,7 @@ $comments = $q->getBookComments($BID);
 <div id="AddComments">
    <font color="orange"><p>add your comment:</p></font>
    <form action="" method="post">
-   <textarea name="comment" style="width:400px;height:60px;">Your comments</textarea>
+   <textarea name="comment" style="width:400px;height:60px;">Enter your comment</textarea>
    <input type="submit" value="Submit" />
    </form>
 
