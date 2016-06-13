@@ -3,7 +3,7 @@
     This is the class declaration head file for back end query operations.
 
     Author: Phoenix
-    Version: 0612.2016
+    Version: 0613.2016
 
     Classes Index:
     - Query Class: all the query methods that construct an object from the query.
@@ -261,6 +261,83 @@ class Query {
 
 		return true;
 	}
-}
 
+	// Query for add an book favorate
+	public function isFavBook($username,$BID){
+		try{$dbh = _db_connect();
+		$stmt = $dbh->prepare(
+			"SELECT AddedAt
+			FROM FAVBooks
+			Where UserName = :uid AND BID = :bid");
+		$stmt->bindParam(':uid', $username);
+		$stmt->bindParam(':bid', $BID);
+		$stmt->execute();
+
+		// *Disconnect from the database
+		_db_commit($dbh);} catch(Exception $e) {_db_error($dbh,$e);}
+
+		return $stmt->fetchColumn();;
+	}
+
+	// Query for add an book favorate
+	public function isFavAuthor($username,$AID){
+		try{$dbh = _db_connect();
+		$stmt = $dbh->prepare(
+			"SELECT AddedAt
+			FROM FAVAuthors
+			Where UserName = :uid AND AID = :aid");
+		$stmt->bindParam(':uid', $username);
+		$stmt->bindParam(':aid', $AID);
+		$stmt->execute();
+
+		// *Disconnect from the database
+		_db_commit($dbh);} catch(Exception $e) {_db_error($dbh,$e);}
+
+		return $stmt->fetchColumn();;
+	}
+	
+	public function changeFavBook($username,$BID){
+		$isFaved = $this->isFavBook($username,$BID);
+		try{$dbh = _db_connect();
+
+		if ($isFaved){
+			$stmt = $dbh->prepare(
+				"DELETE FROM FAVBooks
+				Where UserName = :uid AND BID = :bid");
+		} else {
+			$stmt = $dbh->prepare(
+				"INSERT INTO FAVBooks
+				 VALUES(:uid, :bid, NOW())");
+		}
+		$stmt->bindParam(':uid', $username);
+		$stmt->bindParam(':bid', $BID);
+		$stmt->execute();
+
+		_db_commit($dbh);} catch(Exception $e) {_db_error($dbh,$e);}	
+		
+		return true;
+	}
+	
+	public function changeFavAuthor($username,$AID){
+		$isFaved = $this->isFavAuthor($username,$AID);
+		try{$dbh = _db_connect();
+
+		if ($isFaved){
+			$stmt = $dbh->prepare(
+				"DELETE FROM FAVAuthors
+				Where UserName = :uid AND AID = :aid");
+		} else {
+			$stmt = $dbh->prepare(
+				"INSERT INTO FAVAuthors
+				 VALUES(:uid, :aid, NOW())");
+		}
+		$stmt->bindParam(':uid', $username);
+		$stmt->bindParam(':aid', $AID);
+		$stmt->execute();
+
+		_db_commit($dbh);} catch(Exception $e) {_db_error($dbh,$e);}	
+		
+		return true;
+	}
+}
 ?>

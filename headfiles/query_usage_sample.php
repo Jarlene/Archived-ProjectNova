@@ -3,7 +3,7 @@
     Sample Query class usage demo
 
 	Author: Phoenix
-    Version: 0611.2016
+    Version: 0613.2016
 */
 
 include_once "pdo_h.php";
@@ -65,4 +65,22 @@ foreach($results as $row)
 		echo '<br>';
 		echo $row->toHTMLTableRow();
 	}
+
+
+echo "<h1>Check FavBook</h1>";
+$r =  $q->isFavBook('adam','The_Three_Body_Novels');
+var_dump($r);
+
+
+echo "<h1>Check FavAuthor</h1>";
+$r =  $q->isFavAuthor('adam','Nagatsuki_Tappei');
+var_dump($r);
+
+echo "<h1>Change FavBook</h1>";
+$r =  $q->changeFavBook('adam','The_Three_Body_Novels');
+var_dump($r);
+
+echo "<h1>Change FavAuthor</h1>";
+$r =  $q->changeFavAuthor('adam','Nagatsuki_Tappei');
+var_dump($r);
 ?>
