@@ -44,7 +44,6 @@ Choose your reading language:
 <option value="zho">Chinese</option>
 <option value="jpn">Japanese</option>
 </select>
-<!-- TODO:CHANGE -->
 <input type="submit" name="submit" value="submit" />
 </form>
 </div>
@@ -61,9 +60,7 @@ $language = $_POST['lang'];
 }
 
 $q = new Query;
-$BID=_POST['BID'];
-var_dump($BID);
-//$BID='Re_Zero_Novels';
+$BID='Re_Zero_Novels';
 $obj = $q->getBook($BID, $language);
 $links =  $q->getBookLinks($BID, $language);
 $comments = $q->getBookComments($BID);
@@ -109,12 +106,36 @@ $comments = $q->getBookComments($BID);
 <!-- Add new comments here  -->
 <div id="AddComments">
    <font color="orange"><p>add your comment:</p></font>
-   <form action="../user/testc.php" method="post">
+   <form action="" method="post">
    <textarea name="comment" style="width:400px;height:60px;">Your comments</textarea>
    <input type="submit" value="Submit" />
    </form>
+
+<font color="orange">
+<?php
+if(isset($_POST['comment'])){
+$status=$q->addBookComment($BID,$_POST["comment"]);
+if(!$status){
+  echo "upload comments error";
+}else{
+  echo "upload comments sccuessfull!";
+}
+}
+
+?>
+</font>
+
 </div>
 
 </center>
 
 </body>
+
+
+
+
+
+
+
+
+
