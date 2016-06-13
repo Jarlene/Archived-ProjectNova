@@ -29,7 +29,7 @@ h1{
 </head>
 
 <body>
-<br>
+
 
 <center>
 
@@ -40,6 +40,7 @@ h1{
 <?php
 //include_once "../headfiles/pdo_h.php";
 include_once "../headfiles/backend_classes_h.php";
+include_once "test.php";
 //include_once "../headfiles/frontend_classes_h.php";
 
 $language =$_GET["lcode"];
@@ -63,6 +64,9 @@ $comments = $q->getBookComments($BID);
 </div>
 
 
+
+
+
 <div id="rightb">
 <font color="orange">
 Choose your reading language:
@@ -81,8 +85,26 @@ Choose your reading language:
 
 <!-- Bookmark Links Here  -->
 <div id="AddBookMark">
-<a href="www.baidu.com"><img src="images/addfavoriate.png" alt="" class="img-circle"></a>
+<?php
+if(isset($_POST['favor'])){
+$favorstate1=$q->isFavBook($_COOKIE['user'],$BID);
+$q->changeFavBook($_COOKIE['user'],$BID);
+$favorstate2=$q->isFavBook($_COOKIE['user'],$BID);
+if($favorstate1==$favorstate2){
+  echo "add or delete failed";
+}else{if ($favorstate1==false) {
+  echo "add successsful!";
+}else {echo "delete successsful!";}}
+}
+?>
+<form action="#" method="post">
+<input type="submit" name="favor" value="add or delete favoriate" />
+</form>
 </div>
+
+
+
+
 
 <br>
 
