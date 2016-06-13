@@ -50,9 +50,9 @@ Choose your reading language:
 
 
 <?php
-include_once "../headfiles/pdo_h.php";
+//include_once "../headfiles/pdo_h.php";
 include_once "../headfiles/backend_classes_h.php";
-include_once "../headfiles/frontend_classes_h.php";
+//include_once "../headfiles/frontend_classes_h.php";
 
 $language ='eng';
 if(isset($_POST['submit'])){
