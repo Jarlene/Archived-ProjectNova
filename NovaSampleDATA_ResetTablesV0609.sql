@@ -282,16 +282,6 @@ insert into FAVAuthors values( 'chashaobao', 'Liu_Cixin', DATE(DATE_SUB(NOW(),IN
 
 -- CMTBooks Table
 -- 
-insert into CMTBooks(TStamp, BID, Content) values( DATE_SUB(NOW(),INTERVAL 5 DAY), 'Re_Zero_Novels','this is a short commnet 1 for a book 1');
-insert into CMTBooks(TStamp, BID, Content) values( DATE_SUB(NOW(),INTERVAL 3 DAY), 'The_Three_Body_Novels', 'this is a short commnet 1 for a book 2');
-insert into CMTBooks(TStamp, BID, Content) values( DATE_SUB(NOW(),INTERVAL 1 DAY), 'Re_Zero_Novels', 'this is a short commnet 1 for a book 3');
-insert into CMTBooks(TStamp, BID, Content) values( NOW(), 'The_Three_Body_Novels', 'this is a short commnet 1 for a book 4');
-insert into CMTBooks(TStamp, BID, Content) values( DATE_SUB(NOW(),INTERVAL 2 DAY), 'Re_Zero_Novels', 'this is a short commnet 1 for a book 5');
 
 -- CMTAuthors Table
 -- 
-insert into CMTAuthors(TStamp, AID, Content) values( DATE_SUB(NOW(),INTERVAL 5 DAY), 'Nagatsuki_Tappei', 'this is a short commnet 1 for an author 1');
-insert into CMTAuthors(TStamp, AID, Content) values( DATE_SUB(NOW(),INTERVAL 3 DAY), 'Liu_Cixin', 'this is a short commnet 1 for an author 1');
-insert into CMTAuthors(TStamp, AID, Content) values( DATE_SUB(NOW(),INTERVAL 1 DAY), 'Nagatsuki_Tappei', 'this is a short commnet 1 for an author 1');
-insert into CMTAuthors(TStamp, AID, Content) values( NOW(), 'Nagatsuki_Tappei', 'this is a short commnet 1 for an author 1');
-insert into CMTAuthors(TStamp, AID, Content) values( DATE_SUB(NOW(),INTERVAL 2 DAY), 'Liu_Cixin', 'this is a short commnet 1 for an author 1');
