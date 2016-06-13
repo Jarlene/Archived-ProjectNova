@@ -44,6 +44,7 @@ Choose your reading language:
 <option value="zho">Chinese</option>
 <option value="jpn">Japanese</option>
 </select>
+<!-- TODO:CHANGE -->
 <input type="submit" name="submit" value="submit" />
 </form>
 </div>
@@ -60,7 +61,9 @@ $language = $_POST['lang'];
 }
 
 $q = new Query;
-$BID='Re_Zero_Novels';
+$BID=_POST['BID'];
+var_dump($BID);
+//$BID='Re_Zero_Novels';
 $obj = $q->getBook($BID, $language);
 $links =  $q->getBookLinks($BID, $language);
 $comments = $q->getBookComments($BID);
@@ -115,12 +118,3 @@ $comments = $q->getBookComments($BID);
 </center>
 
 </body>
-
-
-
-
-
-
-
-
-
