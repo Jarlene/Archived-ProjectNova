@@ -97,11 +97,14 @@ $comments = $q->getBookComments($BID);
             echo $r->toHTMLTableRow();
         }
     ?>
+</table>
 </div>
 
 
 <!-- Add new comments here  -->
-
+<div>
+    <input type="" name=""></input>
+</div>
 
 </center>
 
