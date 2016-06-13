@@ -11,6 +11,11 @@
 </head>
 
 <body>
+
+<?php
+include_once 'test.php';
+?>
+
 <div class="search">
 	<div class="signin-head"><img src="images/test/touxiang.jpeg" alt="" class="img-circle"></div>
 	<form  role="form" name="form" action="search.handler.php" method="post">

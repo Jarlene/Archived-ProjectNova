@@ -36,7 +36,7 @@ if(!$res){
 <nav class="navbar navbar-inverse">
   <div class="container-fluid">
     <div class="navbar-header">
-      <a class="navbar-brand" href="#">Project Nova</a>
+      <a class="navbar-brand" href="test.php">Project Nova</a>
     </div>
 
     <ul class="nav navbar-nav">
@@ -48,17 +48,13 @@ if(!$res){
         </ul>
       </li>
       
-      <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">SEARCH <span class="caret"></span></a>
-        <ul class="dropdown-menu">
-          <li><a href="#">BY AUTHOR</a></li> 
-          <li><a href="#">BY BOOK</a></li> 
-        </ul>
-      </li>
+     <li><a href="search.php">search</a></li>
+   
 
       <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">MY FAVOURITE <span class="caret"></span></a>
         <ul class="dropdown-menu">
-          <li><a href="#">AUTHORS</a></li> 
-          <li><a href="#">BOOKS</a></li> 
+          <li><a href="favAuth.php">AUTHORS</a></li> 
+          <li><a href="favBok.php">BOOKS</a></li> 
         </ul>
       </li>
 
@@ -80,3 +76,4 @@ if(!$res){
 </head>
 
 </html>
+
