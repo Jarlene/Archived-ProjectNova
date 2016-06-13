@@ -9,6 +9,23 @@
 <link href="css/bootstrap.min.css" rel="stylesheet">
 <link href="css/signin.css" rel="stylesheet">
 
+<?php
+require_once('../connect.php');
+$username = $_COOKIE['user'];
+ $insertsql = "SELECT * FROM Members WHERE username='$username'";
+ $res = mysqli_query($connect,$insertsql);
+if(!isset($_COOKIE['user'])) {
+    echo "Cookie named '" . 'user' . "' is not set!";
+} else if(!$res)
+ {
+    echo "Cookie '" . 'user' . "' is set!<br>";
+  }else{
+  	  echo "Welcome to nova " . $_COOKIE['user'];
+  }
+  mysqli_free_result($res);
+  mysqli_close($connect);
+?>
+
 </head>
 
 </html>
