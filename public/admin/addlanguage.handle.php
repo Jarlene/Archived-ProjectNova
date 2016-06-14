@@ -20,12 +20,12 @@
   if(mysqli_query($connect,$insertsql)){
     echo '<script type="text/javascript">';
     echo 'alert("add language successfully");';
-    echo 'window.location.href = "addgenre.php";';
+    echo 'window.location.href = "addlanguage.php";';
     echo '</script>';
   } else {
     echo '<script type="text/javascript">';
     echo 'alert("add language unsuccessfully");';
-    echo 'window.location.href = "addgenre.php";';
+    echo 'window.location.href = "addlanguage.php";';
     echo '</script>';
   }
 ?>
