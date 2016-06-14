@@ -15,7 +15,7 @@
 
   if($stmt->fetch()){
     SetCookie("user", "$username", time()+3600);
-    header("location:test.php");
+    header("location:search.php");
     exit;
   } else {
     echo "Login fail, please try again.";
