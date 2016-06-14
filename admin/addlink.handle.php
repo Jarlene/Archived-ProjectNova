@@ -21,12 +21,12 @@
   if(mysqli_query($connect,$insertsql)){
     echo '<script type="text/javascript">';
     echo 'alert("add a link successfully");';
-    echo 'window.location.href = "addauthor.php";';
+    echo 'window.location.href = "addlink.php";';
     echo '</script>';
   } else {
     echo '<script type="text/javascript">';
     echo 'alert("add a link unsuccessfully");';
-    echo 'window.location.href = "addauthor.php";';
+    echo 'window.location.href = "addlink.php";';
     echo '</script>';
   }
 ?>

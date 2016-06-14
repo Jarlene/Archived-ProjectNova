@@ -2,7 +2,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf8">
 <body bgcolor="#ccc">
     <form id="form1" name="form1" method="post" action="addbookdetail.handle.php" style="margin:5px 500px;">
-            <h1>Add a new genre</h1>
+            <h1>Add a new bookdetail</h1>
         Book ID:       <select name="bid">
                           <?php
                             require_once('../connect.php');

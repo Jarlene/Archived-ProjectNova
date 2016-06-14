@@ -1,10 +1,23 @@
+
 <html lang="en">
 <meta http-equiv="Content-Type" content="text/html; charset=utf8">
 <body bgcolor="#ccc">
-    <form id="form1" name="form1" method="post" action="addbook.handle.php" style="margin:5px 500px;">
-            <h1>Add a new book</h1>
-        Book ID:       <input type="text" name="bid" id="bid"/><br/>
-        Author ID:     <select name="aid">
+    <form id="form1" name="form1" method="post" action="updatebook.handler.php" style="margin:5px 500px;">
+            <h1>Add a new genre</h1>
+        Book ID:       <input type="text" name="bid"
+                          value=<?php
+                                  require_once('../connect.php');
+                                  $bid = $_GET['bid'];
+                                  // echo $bid;
+
+                                  $queryid = "select bid from books where bid = '$bid'";
+                                  //echo $queryid;
+                                  $resultid = mysqli_query($connect,$queryid);
+                                  $arr = mysqli_fetch_array($resultid);
+                                  echo $arr[0];
+                                ?>
+                         id="bid"/><br/>
+        Author ID:     <select name="aid" required>
                           <?php
                             require_once('../connect.php');
                             $query = "select distinct AID from Authors";
