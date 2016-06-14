@@ -23,6 +23,10 @@
     header("location:search.php");
     exit;
   } else {
-    echo "Login fail, please try again.";
+
+     echo "<SCRIPT type='text/javascript'> //not showing me this
+        alert('Wrong id or password, please try again.');
+        window.location.replace('index.php');
+        </SCRIPT>";
   }
 ?>
