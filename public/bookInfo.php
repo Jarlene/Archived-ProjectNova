@@ -54,6 +54,15 @@ $BID=$_GET["bid"];
 $obj = $q->getBook($BID,$language);
 $links =  $q->getBookLinks($BID, $language);
 $comments = $q->getBookComments($BID);
+
+// Update user history
+if ($obj->BID != '-'){
+  $user = null;
+  if(isset($_COOKIE['user'])){
+      $user = $_COOKIE['user'];}
+  $q->viewBook($BID,$user);
+}
+
 ?>
 
 <div id="BookHeading">

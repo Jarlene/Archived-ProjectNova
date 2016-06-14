@@ -82,6 +82,8 @@ class BookDetail {
     public $BUpdate = '-';
     public $BDesc = '-';
     public $GLink = '-';
+    public $Clicks = 0;
+    public $Favs =  0;
 
     public function getDetailsInOtherLanguageVersion($LCode){
         return $GLOBALS['BookDetailsURL'].'?bid='.$this->BID.'&lcode='.$LCode;
@@ -125,7 +127,7 @@ class BookDetail {
 // This class is for the case there is no result found.
 class DummyBD extends BookDetail{
     public function toHTMLDivision(){
-        return  '<h2>404. Ops, No such bookï¼?/h2>';
+        return  '<h2>404. Ops, No such book! </h2>';
     }
 }
 

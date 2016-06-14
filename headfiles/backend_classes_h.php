@@ -411,5 +411,48 @@ class Query {
 		$stmt->setFetchMode(PDO::FETCH_INTO, new BookShowcase);
 		return $stmt;
 	}
+	
+	public function viewBook($BID, $user){
+		try{$dbh = _db_connect();
+
+		// Update Clicks
+		$stmt = $dbh->prepare(
+			"UPDATE Books 
+  			SET Clicks = Clicks + 1 
+ 			WHERE BID = :bid");
+		$stmt->bindParam(':bid', $BID);
+		$stmt->execute();
+
+		// check if user valid
+		if ($user){
+			$stmt = $dbh->prepare("SELECT * FROM Members WHERE UserName=:uid");
+    		$stmt->bindParam(':uid', $user);
+    		$stmt->execute();
+    		if ($stmt->fetch()){
+    			// Update user history
+				$stmt = $dbh->prepare("SELECT * FROM HSBooks WHERE UserName=:uid AND BID = :bid");
+				$stmt->bindParam(':uid', $user);
+				$stmt->bindParam(':bid', $BID);
+				$stmt->execute();
+				if ($stmt->fetch()){
+					// User has already visited the book
+					$stmt = $dbh->prepare("UPDATE HSBooks SET LastVisit = NOW() WHERE UserName=:uid AND BID = :bid");
+					$stmt->bindParam(':uid', $user);
+					$stmt->bindParam(':bid', $BID);
+					$stmt->execute();
+				} else {
+					// User had never visited the book
+					$stmt = $dbh->prepare("INSERT INTO HSBooks VALUES(:uid, :bid, NOW())");
+					$stmt->bindParam(':uid', $user);
+					$stmt->bindParam(':bid', $BID);
+					$stmt->execute();
+				}
+    		}
+		}
+		_db_commit($dbh);} catch(Exception $e) {_db_error($dbh,$e);}
+
+		return true;
+	}
+
 }
 ?>
