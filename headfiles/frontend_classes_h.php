@@ -164,12 +164,12 @@ class DummyAD extends AuthorDetail{
 
 
 class Comment {
-    public $timeStamp = '-';
+    public $TStamp = '-';
     public $Content = '-';
 
     public function toHTMLTableRow(){
         return '<tr>
-                    <td><blockquote>'.$this->Content.'</blockquote><br>'.$this->timeStamp.'</td>
+                    <td><blockquote>'.$this->Content.'</blockquote><br>'.$this->TStamp.'</td>
                 </tr>';
     }
 }
@@ -189,7 +189,7 @@ class FavBook {
     public $BName = '-';
     public $AID = '-';
     public $AName = '-';
-    public $Date = '-';
+    public $AddedAt = '-';
     public $LCode = '-';
 
     private $BookDetailsURL = 'bookinfo.php';
@@ -199,7 +199,7 @@ class FavBook {
         return '<tr>
                     <td><a href="'.$this->BookDetailsURL.'?bid='.$this->BID.'&lcode='.$this->LCode.'">'.$this->BName.'</a></td>
                     <td><a href="'.$this->AuthorDetailsURL.'?bid='.$this->AID.'&lcode='.$this->LCode.'">'.$this->AName.'</a></td>
-                    <td>'.$this->Date.'</td>
+                    <td>'.$this->AddedAt.'</td>
                 </tr>';
     }
 }
@@ -208,7 +208,7 @@ class FavBook {
 class FavAuthor {
     public $AID = '-';
     public $AName = '-';
-    public $Date = '-';
+    public $AddedAt = '-';
     public $LCode = '-';
 
     private $AuthorDetailsURL = 'placeholder.php';
@@ -216,7 +216,7 @@ class FavAuthor {
     public function toHTMLTableRow(){
         return '<tr>
                     <td><a href="'.$this->AuthorDetailsURL.'?bid='.$this->AID.'&lcode='.$this->LCode.'">'.$this->AName.'</a></td>
-                    <td>'.$this->Date.'</td>
+                    <td>'.$this->AddedAt.'</td>
                 </tr>';
     }
 }
