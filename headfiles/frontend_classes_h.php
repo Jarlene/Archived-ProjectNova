@@ -77,7 +77,7 @@ class BookDetail {
                 <table id="details_table">
                   <tr>
                     <td>Author</td>
-                    <td><a href="'.$this->AuthorDetailsURL.'?aid='.$this->AID.'">'.$this->AName.'</a></td>
+                    <td><a href="'.$this->AuthorDetailsURL.'?aid='.$this->AID.'&lcode='.$this->LCode.'">'.$this->AName.'</a></td>
                   </tr>
                   <tr>
                     <td>Genre</td>
@@ -110,7 +110,7 @@ class BookDetail {
 // This class is for the case there is no result found.
 class DummyBD extends BookDetail{
     public function toHTMLDivision(){
-        return  '<h2>404. Ops, No such bookÔºÅ</h2>';
+        return  '<h2>404. Ops, No such bookÔº?/h2>';
     }
 }
 
@@ -158,7 +158,7 @@ class AuthorDetail {
 // This class is for the case there is no result found.
 class DummyAD extends AuthorDetail{
     public function toHTMLDivision(){
-        return  '<h2>404. Ops, no such authorÔºÅ</h2>';
+        return  '<h2>404. Ops, no such authorÔº?/h2>';
     }
 }
 
@@ -198,7 +198,7 @@ class FavBook {
     public function toHTMLTableRow(){
         return '<tr>
                     <td><a href="'.$this->BookDetailsURL.'?bid='.$this->BID.'&lcode='.$this->LCode.'">'.$this->BName.'</a></td>
-                    <td><a href="'.$this->AuthorDetailsURL.'?bid='.$this->AID.'&lcode='.$this->LCode.'">'.$this->AName.'</a></td>
+                    <td><a href="'.$this->AuthorDetailsURL.'?aid='.$this->AID.'&lcode='.$this->LCode.'">'.$this->AName.'</a></td>
                     <td>'.$this->AddedAt.'</td>
                 </tr>';
     }
@@ -211,7 +211,7 @@ class FavAuthor {
     public $AddedAt = '-';
     public $LCode = '-';
 
-    private $AuthorDetailsURL = 'placeholder.php';
+    private $AuthorDetailsURL = 'authorInfo.php';
 
     public function toHTMLTableRow(){
         return '<tr>
