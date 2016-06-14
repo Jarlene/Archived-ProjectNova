@@ -5,15 +5,11 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Welcome to nova!</title>
+<title>Book: <?php echo $_GET["bid"] ?></title>
 <link href="css/bootstrap.min.css" rel="stylesheet">
 <link href="css/signin.css" rel="stylesheet">
 
 <style>
-h1{
-  color: #FFF; 
-  background: #FFF
-  }
 table, th, td {
     border: 1px solid black;
     border-collapse: collapse;
@@ -28,6 +24,7 @@ table{
 }
 p{
   font-size: 16px;
+  color: black; 
 }
 </style>
 </head>
@@ -56,7 +53,7 @@ $comments = $q->getBookComments($BID);
 ?>
 
 <div id="BookDetail">
-<h1>BOOK INFO</h1>
+<font color="orange" size="7">Book information</font>
 <?php
     echo $obj->toHTMLDivision();
 ?>

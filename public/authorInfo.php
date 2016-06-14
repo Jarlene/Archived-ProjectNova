@@ -5,15 +5,11 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Welcome to nova!</title>
+<title>Author: <?php echo $_GET["aid"] ?></title>
 <link href="css/bootstrap.min.css" rel="stylesheet">
 <link href="css/signin.css" rel="stylesheet">
 
 <style>
-h1{
-  color: #FFF; 
-  background: #FFF
-  }
 table, th, td {
     border: 1px solid black;
     border-collapse: collapse;
@@ -60,7 +56,7 @@ $comments = $q->getAuthorComments($AID);
 ?>
 
 <div id="AuthorDetail">
-<h1>AUTHOR INFO</h1>
+<font color="orange" size="7">Author information</font>
 <?php
     echo $obj->toHTMLDivision();
 ?>
