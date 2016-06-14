@@ -1,5 +1,5 @@
 -- Sample Data Insertion(withdatabase reseting)
--- Version: V0613
+-- Version: V0614
 -- Author: Phoenix
 
 CREATE DATABASE if not exists nova;
@@ -55,8 +55,8 @@ CREATE TABLE Books(
     AID varchar(100) not null,
     GCode varchar(10) not null,
     ORelease DATE default 0,
-    Clicks INT UNSIGNED default 0,
-    Rating INT UNSIGNED default NULL,
+    Clicks INT not null default 0,
+    Rating INT UNSIGNED not null default 0,
     FOREIGN KEY(AID) REFERENCES Authors(AID) ON UPDATE CASCADE ON DELETE CASCADE,
     FOREIGN KEY(GCode) REFERENCES Genres(GCode) ON UPDATE CASCADE ON DELETE CASCADE
 );
@@ -79,7 +79,7 @@ CREATE TABLE Links(
     LType TEXT not null,
     BID varchar(100) not null,
     LCode char(5) not null,
-    LChecksum INT unsigned not null,
+    LChecksum INT UNSIGNED not null,
     primary key(LChecksum, BID, LCode),
     FOREIGN KEY(BID) REFERENCES Books(BID) ON UPDATE CASCADE ON DELETE CASCADE,
     FOREIGN KEY(LCode) REFERENCES Languages(LCode) ON UPDATE CASCADE ON DELETE CASCADE
@@ -144,7 +144,25 @@ CREATE TABLE CMTAuthors(
     Content TEXT not null,
     FOREIGN KEY(AID) REFERENCES Authors(AID) ON UPDATE CASCADE ON DELETE CASCADE
 );
+
 -- END OF TABLE RESETTING
+
+
+--
+-- Triggers
+--
+delimiter //
+CREATE TRIGGER book_upd_check
+BEFORE UPDATE ON Books
+FOR EACH ROW
+BEGIN
+    IF NEW.Clicks < 0 THEN
+        SET NEW.Clicks = 0;
+    ELSEIF NEW.CLICKS > 2147483640 THEN
+        SET NEW.Clicks = 2147483640;
+    END IF;
+END;//
+delimiter ;
 
 
 --
@@ -212,13 +230,13 @@ insert into Genres values( 'History', 'zho', '历史', 'https://zh.wikipedia.org
 
 -- Books Table
 -- 
-insert into Books values( 'Re_Zero_Novels','Nagatsuki_Tappei', 'Fantasy', DATE('2012-04-20 00:00:00'), null, null);
-insert into Books values( 'The_Three_Body_Novels','Liu_Cixin', 'SF', DATE('2006-05-01 00:00:00'), null, null);
-insert into Books values( 'The_Micro_Age_LCX','Liu_Cixin', 'SF', DATE('2006-05-01 00:00:00'), null, null);
-insert into Books values( "The_Whales_Song_LCX",'Liu_Cixin', 'SF', DATE('2006-05-01 00:00:00'), null, null);
-insert into Books values( 'Migration_Across_Time_LCX','Liu_Cixin', 'SF', DATE('2006-05-01 00:00:00'), null, null);
-insert into Books values( 'Full_Metal_Panic_Novels','Gatoh_Shoji', 'SF', DATE('1998-09-18 00:00:00'), null, null);
-insert into Books values( "Full_Metal_Panic_Another",'Gatoh_Shoji', 'SF', DATE('2011-08-20 00:00:00'), null, null);
+insert into Books values( 'Re_Zero_Novels','Nagatsuki_Tappei', 'Fantasy', DATE('2012-04-20 00:00:00'), default, default);
+insert into Books values( 'The_Three_Body_Novels','Liu_Cixin', 'SF', DATE('2006-05-01 00:00:00'), default, default);
+insert into Books values( 'The_Micro_Age_LCX','Liu_Cixin', 'SF', DATE('2006-05-01 00:00:00'), default, default);
+insert into Books values( "The_Whales_Song_LCX",'Liu_Cixin', 'SF', DATE('2006-05-01 00:00:00'), default, default);
+insert into Books values( 'Migration_Across_Time_LCX','Liu_Cixin', 'SF', DATE('2006-05-01 00:00:00'), default, default);
+insert into Books values( 'Full_Metal_Panic_Novels','Gatoh_Shoji', 'SF', DATE('1998-09-18 00:00:00'), default, default);
+insert into Books values( "Full_Metal_Panic_Another",'Gatoh_Shoji', 'SF', DATE('2011-08-20 00:00:00'),default, default);
 -- BookDetails Table
 -- 
 insert into BookDetails values( 'Re_Zero_Novels','jpn', 'Ｒｅ：ゼロから始める異世界生活', DATE('2012-04-20 00:00:00'), 4768996, CURRENT_DATE(), "突如、コンビニ帰りに異世界へ召喚されたひきこもり学生の菜月昴。知識も技術も武力もコミュ能力もない、ないない尽くしの凡人が、チートボーナスを与えられることもなく放り込まれた異世界で必死こいて生き抜く。彼に与えられたたった一個の祝福は、『死んだら巻き戻ります』という痛みを伴う『死に戻り』のみ！　頼れるもののいない異世界で、いったい彼は何度死に、なにを掴み取るのか。　　※血も死体も出る予定ですが、そんな派手なことにはなりません。");
@@ -264,7 +282,7 @@ insert into Members values( 'admin', sha1('admin'), 'eng', null);
 insert into Members values( 'adam', sha1('awsome123'), 'zho', null);
 insert into Members values( 'bob', sha1('greatpassword'), 'eng', null);
 insert into Members values( 'chashaobao', sha1('chashaobao'), 'jpn', null);
-insert into Members values( 'guest', sha1('guest'), null, null);
+insert into Members values( 'guest', sha1('guest'), default, null);
 
 
 -- HSBooks Table
