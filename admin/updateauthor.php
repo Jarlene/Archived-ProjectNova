@@ -5,7 +5,7 @@
 <body bgcolor="#ccc">
 
     <form id="form1" name="form1" method="post" action="updateauthor.handler.php" style="margin:5px 500px;">
-            <h1>Add a new author</h1>
+            <h1>Update an author</h1>
         Author ID:             <input type="text" name="aid"
                                   value=<?php
                                           require_once('../connect.php');

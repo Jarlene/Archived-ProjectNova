@@ -8,7 +8,7 @@
 <body bgcolor="#ccc">
 
     <form id="form1" name="form1" method="post" action="addlink.handle.php" style="margin:5px 500px;">
-            <h1>Add a new genre</h1>
+            <h1>Add a new link</h1>
         URL:            <textarea cols=40 rows=2 name="url"></textarea><br/><br/>
         LType:          <textarea cols=40 rows=5 name="ltype"></textarea><br/><br/>
         Book ID:       <select name="bid">

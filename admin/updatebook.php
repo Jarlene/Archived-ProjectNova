@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf8">
 <body bgcolor="#ccc">
     <form id="form1" name="form1" method="post" action="updatebook.handler.php" style="margin:5px 500px;">
-            <h1>Add a new genre</h1>
+            <h1>Update a book</h1>
         Book ID:       <input type="text" name="bid"
                           value=<?php
                                   require_once('../connect.php');
