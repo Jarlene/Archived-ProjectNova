@@ -1,5 +1,5 @@
 <?php
-  require_once "../headfiles/connect.php";
+  require_once "connect.php";
 
   $username = $_POST['username'];
   $password = $_POST['password'];
@@ -12,7 +12,7 @@
 
   if($rows){
     SetCookie("user", "$username", time()+3600);
-    header("location:test.php");
+    header("location:search.php");
     exit;
   } else {
     echo "Login fail, please try again.";
