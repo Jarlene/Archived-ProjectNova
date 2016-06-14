@@ -8,13 +8,13 @@
     Author: Phoenix
     Version: 0612.2016
 */
-require_once 'mysql_login_info.ini';
+include 'mysql_login_info.ini';
 
 
 // Initialize PDO object and conncet to the server.
 // Open transation. Must call commit() after.
 function _db_connect(){
-	$dbh = new PDO(sprintf('mysql:host=%s;dbname=%s;charset=utf8', MYSQL_HOST, MYSQL_DB_DATABASE), MYSQL_DB_USER, MYSQL_DB_PASS);
+	$dbh = new PDO('mysql:host=localhost;dbname=nova;charset=utf8', MYSQL_DB_USER, MYSQL_DB_PASS);
 	$dbh->beginTransaction();
 	return $dbh;
 }

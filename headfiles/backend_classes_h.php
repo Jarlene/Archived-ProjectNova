@@ -15,8 +15,8 @@
         - getBookComments($BID): Gets comments for the book and returns an array of Comment objects.
         - getAuhtorComments($BID): Gets comments for the author and returns an array of Comment objects.
 */
-include_once 'pdo_h.php';
-include_once 'frontend_classes_h.php';
+require_once 'pdo_h.php';
+require_once 'frontend_classes_h.php';
 
 class Query {
 

@@ -42,7 +42,7 @@ th, td {
   </tr>
 
 <?php
-  require_once 'frontend_classes_h.php';
+  include_once 'frontend_classes_h.php';
 
   $results = array(new SearchResult, new SearchResult, new SearchResult);
   // Filling Dummy Datas for sample purpose
@@ -72,7 +72,7 @@ th, td {
 <h1> BookDetail Demo:</h1>
 <div id="BookDetail">
 <?php
-  require_once 'frontend_classes_h.php';
+  include_once 'frontend_classes_h.php';
 
   $r = new BookDetail;
   // Filling Dummy Datas for sample purpose
@@ -112,7 +112,7 @@ th, td {
   </tr>
 
 <?php
-  require_once 'frontend_classes_h.php';
+  include_once 'frontend_classes_h.php';
 
   $results = array(new BookLink, new BookLink, new BookLink);
   // Filling Dummy Datas for sample purpose
@@ -135,7 +135,7 @@ th, td {
 <h1> AuthorDetail Demo:</h1>
 <div id="AuthorDetail">
 <?php
-  require_once 'frontend_classes_h.php';
+  include_once 'frontend_classes_h.php';
 
   $r = new AuthorDetail;
   // Filling Dummy Datas for sample purpose
@@ -162,7 +162,7 @@ th, td {
 <table id="Comments Table">
   <caption>Comments</caption>
 <?php
-  require_once 'frontend_classes_h.php';
+  include_once 'frontend_classes_h.php';
 
   $results = array(new Comment, new Comment, new Comment);
   // Filling Dummy Datas for sample purpose
