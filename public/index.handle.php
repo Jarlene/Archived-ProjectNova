@@ -13,8 +13,13 @@
   $stmt->execute();
   _db_commit($dbh);} catch(Exception $e) {_db_error($dbh,$e);}
 
-  if($stmt->fetch()){
+  $r = $stmt->fetch();
+  if($r){
     SetCookie("user", "$username", time()+3600);
+    if ($r->LangPref)
+    	SetCookie("lang", "$r->LangPref", time()+3600);
+    else
+    	SetCookie("lang", "eng", time()+3600);
     header("location:search.php");
     exit;
   } else {
