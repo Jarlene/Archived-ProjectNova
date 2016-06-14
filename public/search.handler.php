@@ -5,6 +5,27 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<style>
+table, th, td {
+    border: 2px solid black;
+    border-collapse: collapse;
+    text-align: center;
+}
+th, td {
+    padding: 20px;
+}
+</style>
+
+<style>
+  #SearchResult {
+    width:100%;
+    height:100%;
+  }
+  table {
+    margin: 0 auto; /* or margin: 0 auto 0 auto */
+  }
+</style>
+
 
 <title>Welcome to nova!</title>
 
@@ -115,11 +136,25 @@ $q = new Query;
 echo "<h1>Search</h1>";
 $results = $q->search($search, $language);
 
+echo '
+<div id="SearchResult">
+<table id="SearchTable">
+  <tr>
+    <th>Book Title</th>
+    <th>Author</th>
+    <th>Genre</th>
+    <th>Release</th>
+    <th>Update</th>
+  </tr>';
+
 foreach($results as $row)
 	{
 			echo $row->toHTMLTableRow();
 	}
+
+echo "
+</table>
+</div>";
 ?>
 </body>
-
 </html>
