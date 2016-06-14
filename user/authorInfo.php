@@ -14,7 +14,7 @@ table, th, td {
     border: 1px solid black;
     border-collapse: collapse;
     text-align: center;
-    color: orange;
+    color: black;
 }
 th, td {
     padding: 5px;
@@ -70,7 +70,7 @@ $comments = $q->getAuthorComments($AID);
 
 
 <div id="rightb">
-<font color="orange">
+<font color="orange" size="5">
 Choose your reading language:
 </font>
 <form action="#" method="post">
@@ -125,7 +125,7 @@ if($favorstate1==$favorstate2){
 
 <!-- Add new comments here  -->
 <div id="AddComments">
-   <font color="orange"><p>add your comment:</p></font>
+   <font color="orange" size="5">add your comment:</font>
    <form action="" method="post">
    <textarea name="comment" style="width:400px;height:60px;">Enter your comment</textarea>
    <input type="submit" value="Submit" />
