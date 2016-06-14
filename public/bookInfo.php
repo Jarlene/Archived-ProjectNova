@@ -26,6 +26,10 @@ p{
   font-size: 16px;
   color: black; 
 }
+#BookHeading{
+  background-color: white;
+}
+
 </style>
 </head>
 
@@ -52,8 +56,12 @@ $links =  $q->getBookLinks($BID, $language);
 $comments = $q->getBookComments($BID);
 ?>
 
+<div id="BookHeading">
+<font color="orange" size="6">Book information</font>
+</div>
+
+
 <div id="BookDetail">
-<font color="orange" size="7">Book information</font>
 <?php
     echo $obj->toHTMLDivision();
 ?>
@@ -156,7 +164,7 @@ $status=$q->addBookComment($BID,$_POST["comment"]);
 if(!$status){
   echo "upload comments error";
 }else{
-  echo "upload comments sccuessfull!";
+  echo '<meta http-equiv="refresh" content="0" />';
 }
 }
 

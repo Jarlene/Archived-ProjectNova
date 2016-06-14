@@ -30,6 +30,9 @@ p{
     width: 70%;
     
 }
+#AuthorHeading{
+  background-color: white;
+}
 
 </style>
 </head>
@@ -54,9 +57,11 @@ $AID=$_GET["aid"];
 $obj = $q->getAuthor($AID,$language);
 $comments = $q->getAuthorComments($AID);
 ?>
+<div id="AuthorHeading">
+<font color="orange" size="6">Author information</font>
+</div>
 
 <div id="AuthorDetail">
-<font color="orange" size="7">Author information</font>
 <?php
     echo $obj->toHTMLDivision();
 ?>
@@ -140,7 +145,7 @@ $status=$q->addAuthorComment($AID,$_POST["comment"]);
 if(!$status){
   echo "upload comments error";
 }else{
-  echo "upload comments sccuessfull!";
+  echo '<meta http-equiv="refresh" content="0" />';
 }
 }
 
