@@ -10,6 +10,10 @@
 <link href="css/signin.css" rel="stylesheet">
 
 <style>
+h1{
+  color: #FFF; 
+  background: #FFF
+  }
 table, th, td {
     border: 1px solid black;
     border-collapse: collapse;
@@ -56,14 +60,11 @@ $comments = $q->getAuthorComments($AID);
 ?>
 
 <div id="AuthorDetail">
-
+<h1>AUTHOR INFO</h1>
 <?php
     echo $obj->toHTMLDivision();
 ?>
-
 </div>
-
-
 
 
 
@@ -73,9 +74,19 @@ Choose your reading language:
 </font>
 <form action="#" method="post">
 <select name="lang">
-<option value="eng">English</option>
-<option value="zho">Chinese</option>
-<option value="jpn">Japanese</option>
+ <?php
+  require_once('../headfiles/pdo_h.php');
+  try{$dbh = _db_connect();
+  $stmt = $dbh->prepare("SELECT DISTINCT * from Languages");
+  $stmt->execute();
+  _db_commit($dbh);} catch(Exception $e) {_db_error($dbh,$e);}
+
+  $result = $stmt->fetchAll();
+  var_dump($result);
+  foreach ($result as $v) {
+    echo '<option value="'.$v['LCode'].'">'.$v["LName"].'</option>';
+  }
+?>
 </select>
 <input type="submit" name="submit" value="submit" />
 </form>
@@ -101,9 +112,6 @@ if($favorstate1==$favorstate2){
 <input type="submit" name="favor" value="add or delete favoriate" />
 </form>
 </div>
-
-
-
 
 
 <br>

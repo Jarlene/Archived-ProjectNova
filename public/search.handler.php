@@ -14,9 +14,6 @@ table, th, td {
 th, td {
     padding: 20px;
 }
-</style>
-
-<style>
   #SearchResult {
     width:100%;
     height:100%;
@@ -25,69 +22,15 @@ th, td {
     margin: 0 auto; /* or margin: 0 auto 0 auto */
   }
 </style>
-
-
 <title>Welcome to nova!</title>
 
 <link href="css/bootstrap.min.css" rel="stylesheet">
 <link href="css/signin.css" rel="stylesheet">
+</head>
 
 <?php
-require_once('../headfiles/connect.php');
-
- $username = $_COOKIE['user'];
- $insertsql = "SELECT * FROM Members WHERE username='$username'";
- $res = mysqli_query($connect,$insertsql);
-if(!$res){
-    echo '<script type="text/javascript">';
-    echo 'alert("the user does not exist or has expired.");';
-    echo 'window.location.href = "index.php";';
-    echo '</script>';
-  }else{
-
-      echo '
-  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
-  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-
-<nav class="navbar navbar-inverse">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <a class="navbar-brand" href="test.php">Project Nova</a>
-    </div>
-
-    <ul class="nav navbar-nav">
-
-      <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Home <span class="caret"></span></a>
-        <ul class="dropdown-menu">
-         <li><a>'. $_COOKIE['user'] .'</a></li>
-         <li><a href="index.php">signout</a></li>
-        </ul>
-      </li>
-
-     <li><a href="search.php">search</a></li>
-
-
-      <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">MY FAVOURITE <span class="caret"></span></a>
-        <ul class="dropdown-menu">
-          <li><a href="favAuth.php">AUTHORS</a></li>
-          <li><a href="favBok.php">BOOKS</a></li>
-        </ul>
-      </li>
-
-
-    </ul>
-  </div>
-</nav>
-
-';
-
-   }
-  mysqli_free_result($res);
-  mysqli_close($connect);
+require_once('test.php');
 ?>
-
-</head>
 
 <body>
 
@@ -117,21 +60,12 @@ if(!$res){
 </div>
 </form>
 <?php
-/*
-		Sample Query class usage demo
-
-		Author: Leo
-		Version: 0612.2016
-*/
 
 require_once('../headfiles/backend_classes_h.php');
 
 $language = $_POST['lcode'];
 $search = $_POST['search'];
 
-// echo $language;
-// echo $search;
-//Execution codes:
 $q = new Query;
 echo "<h1>Search</h1>";
 $results = $q->search($search, $language);

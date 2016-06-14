@@ -17,27 +17,41 @@
 <link href="css/signin.css" rel="stylesheet">
 
 <?php
-$username = $_COOKIE['user'];
-$lang = $_COOKIE['lang'];
+function isValidUser(){
+  $username = null;
+  $lang = 'eng';
+  if(isset($_COOKIE['user'])){
+    $username = $_COOKIE['user'];}
 
-require_once('../headfiles/pdo_h.php');
-try{$dbh = _db_connect();
-  $stmt = $dbh->prepare("SELECT * FROM Members WHERE UserName=:uid");
-  $stmt->bindParam(':uid', $username);
-  $stmt->execute();
-  _db_commit($dbh);} catch(Exception $e) {_db_error($dbh,$e);}
+  if(isset($_COOKIE['lang'])){
+    $lang = $_COOKIE['lang'];}
 
-  $r = $stmt->fetch();
 
-if(!$r){
-    echo '<script type="text/javascript">';
-    echo 'alert("the user does not exist or has expired.");';
-    echo 'window.location.href = "index.php";';
-    echo '</script>'; 
+  require_once('../headfiles/pdo_h.php');
+  try{$dbh = _db_connect();
+    $stmt = $dbh->prepare("SELECT * FROM Members WHERE UserName=:uid");
+    $stmt->bindParam(':uid', $username);
+    $stmt->execute();
+    _db_commit($dbh);} catch(Exception $e) {_db_error($dbh,$e);}
+
+    $r = $stmt->fetch();
+
+    return $r;
+}
+
+function yeildIfInvalidUser(){
+  if (!isValidUser()){
+    $msg = "The user does not exist or has expired. Please log in first!";
+    echo "<SCRIPT type='text/javascript'> //not showing me this
+        alert('$msg');
+        window.location.replace('index.php');
+        </SCRIPT>";
+  }
 }
 ?>
 
 </head>
+
 
 <body>
 <nav class="navbar navbar-inverse">
@@ -47,22 +61,27 @@ if(!$r){
     </div>
     <ul class="nav navbar-nav">
   
-      <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Home <span class="caret"></span></a>
+      <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">
+<?php
+if(isset($_COOKIE['user'])){
+  echo 'Hi,'. $_COOKIE['user'];
+}else{
+  echo 'Login here';
+}
+?>
+      <span class="caret"></span></a>
         <ul class="dropdown-menu">
 <?php
-  echo   '<li><a>'. $_COOKIE['user'] .'</a></li>';
+if(isset($_COOKIE['user'])){
+  echo   '<li><a href=fav.php> MY Favourites </a></li>';
+}else{
+  echo '<li><a href=index.php>Log in</a></li>';
+}
 ?>
-         <li><a href="index.php">signout</a></li> 
+         <li><a href="signout.php">Sign Out</a></li> 
         </ul>
       </li>
-     <li><a href="search.php">search</a></li>
-   
-      <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">MY FAVOURITE <span class="caret"></span></a>
-        <ul class="dropdown-menu">
-          <li><a href="favAuth.php">AUTHORS</a></li> 
-          <li><a href="favBok.php">BOOKS</a></li> 
-        </ul>
-      </li>
+     <li><a href="search.php">Search</a></li>
     </ul>
   </div>
 </nav>

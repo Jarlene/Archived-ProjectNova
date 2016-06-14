@@ -10,6 +10,12 @@
 <link href="css/signin.css" rel="stylesheet">
 
 </head>
+<?php
+require_once('test.php');
+if(isset($_COOKIE['user'])){
+	header("location:search.php");
+    exit;}
+?>
 
 <body>
 <div class="signin">
