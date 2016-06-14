@@ -4,8 +4,29 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-
+<style>
+#TB{
+    width:65%;
+    height:100px;
+    float:left;
+    margin: 0 auto;
+}
+#TA{
+    width:30%;
+    height:100px;
+    float:left;
+    margin: 0 auto;
+}
+table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+    text-align: center;
+    margin: 0 auto;
+}
+th, td {
+    padding: 5px;
+}
+</style>
 <title>Welcome to nova!</title>
 
 <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -32,7 +53,7 @@ if(!$res){
 <nav class="navbar navbar-inverse">
   <div class="container-fluid">
     <div class="navbar-header">
-      <a class="navbar-brand" href="test.php">Project Nova</a>
+      <a class="navbar-brand" href="search.php">Project Nova</a>
     </div>
 
     <ul class="nav navbar-nav">
@@ -95,6 +116,61 @@ if(!$res){
 	</form>
 </div>
 
-</body>
+<!-- Show Case Here -->
 
+<div id='TB'>
+<div id="SearchResult">
+<h3> Trending Books:</h3>
+<table id="TrendingBooks">
+  <tr>
+    <th>Book Title</th>
+    <th>Author</th>
+    <th>Genre</th>
+    <th>Release</th>
+    <th>Update</th>
+    <th>Views</th>
+    <th>Fans</th>
+  </tr>
+
+<?php
+  require_once('../headfiles/backend_classes_h.php');
+  $q = new Query;
+  $results = $q->getBookShowcase('eng');
+  $i = 0;
+  foreach ($results as $r) {
+    if ($i > 9) break;
+    echo $r->toHTMLTableRow();
+    $i++;
+  }
+?>
+ </table>
+</div>
+</div>
+
+<div id='TA'>
+<div id="AuthorShowcase">
+<h3> Trending Authors:</h3>
+<table id="TrendingAuthors">
+  <tr>
+    <th>Author</th>
+    <th>Fans</th>
+  </tr>
+
+<?php
+  require_once('../headfiles/backend_classes_h.php');
+  $q = new Query;
+  $results = $q->getAuthorShowcase('eng');
+  $i = 0;
+  foreach ($results as $r) {
+    if ($i > 9) break;
+    echo $r->toHTMLTableRow();
+    $i++;
+  }
+?>
+
+  </table>
+  </div>
+</div>
+
+</body>
 </html>

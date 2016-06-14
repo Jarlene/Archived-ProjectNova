@@ -374,6 +374,42 @@ class Query {
 		$stmt->setFetchMode(PDO::FETCH_INTO, new FAVAuthor);
 		
 		return $stmt;
-	}	
+	}
+
+	public function getAuthorShowcase($lcode){
+		try{$dbh = _db_connect();
+
+		$stmt = $dbh->prepare(
+			"SELECT DISTINCT AID, AName, LCode, count(*) as Favs
+			FROM FAVAuthors NATURAL JOIN Authors
+			WHERE LCode = :lang
+			GROUP BY AID
+			ORDER BY Favs DESC");
+		$stmt->bindParam(':lang', $lcode);
+		$stmt->execute();
+
+		_db_commit($dbh);} catch(Exception $e) {_db_error($dbh,$e);}
+
+		$stmt->setFetchMode(PDO::FETCH_INTO, new AuthorDetail);
+		return $stmt;
+	}
+
+	public function getBookShowcase($lcode){
+		try{$dbh = _db_connect();
+
+		$stmt = $dbh->prepare(
+			"SELECT DISTINCT BID, BName, AID, AName, LCode, GCode, GName, BRelease, BUpdate, GLink, Clicks, count(*) as Favs
+			FROM FAVBooks NATURAL JOIN Books NATURAL JOIN BookDetails NATURAL JOIN Authors NATURAL JOIN Genres
+			WHERE LCode = :lang
+			GROUP BY BID
+			ORDER BY Favs DESC");
+		$stmt->bindParam(':lang', $lcode);
+		$stmt->execute();
+
+		_db_commit($dbh);} catch(Exception $e) {_db_error($dbh,$e);}
+
+		$stmt->setFetchMode(PDO::FETCH_INTO, new BookShowcase);
+		return $stmt;
+	}
 }
 ?>

@@ -50,6 +50,24 @@ class DummySR extends SearchResult{
     }
 }
 
+class BookShowcase extends SearchResult {
+    public $Clicks = 0;
+    public $Favs = 0;
+
+    public function toHTMLTableRow(){
+        return '<tr>
+                    <td><a href="'.$GLOBALS['BookDetailsURL'].'?bid='.$this->BID.'&lcode='.$this->LCode.'">'.$this->BName.'</a></td>
+                    <td><a href="'.$GLOBALS['AuthorDetailsURL'].'?aid='.$this->AID.'&lcode='.$this->LCode.'">'.$this->AName.'</a></td>
+                    <td><a href="'.$this->GLink.'">'.$this->GName.'</a></td>
+                    <td>'.$this->BRelease.'</td>
+                    <td>'.$this->BUpdate.'</td>
+                    <td>'.$this->Clicks.'</td>
+                    <td>'.$this->Favs.'</td>
+                </tr>';
+    }
+}
+
+
 class BookDetail {
     public $BID = '-';
     public $BName = '-';
@@ -137,6 +155,7 @@ class AuthorDetail {
     public $AName = '-';
     public $LCode = 'eng';
     public $ADesc = '-';
+    public $Favs = 0;
 
     public function getDetailsInOtherLanguageVersion($LCode){
         return $GLOBALS['AuthorDetailsURL'].'?aid='.$this->AID.'&lcode='.$LCode;
@@ -145,6 +164,13 @@ class AuthorDetail {
     public function toHTMLDivision(){
         return  '<h2>'.$this->AName.'</h2>
                 <p>'.$this->ADesc.'</p>';
+    }
+
+    public function toHTMLTableRow(){
+        return '<tr>
+                    <td><a href="'.$GLOBALS['AuthorDetailsURL'].'?aid='.$this->AID.'&lcode='.$this->LCode.'">'.$this->AName.'</a></td>
+                    <td>'.$this->Favs.'</td>
+                </tr>';
     }
 }
 
