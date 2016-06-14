@@ -10,9 +10,7 @@
 <link href="css/search.css" rel="stylesheet">
 </head>
 
-<?php
-include_once 'test.php';
-?>
+
 <body>
 <div class="search">
 	<div class="signin-head"><img src="images/test/touxiang.jpeg" alt="" class="img-circle"></div>
@@ -40,9 +38,9 @@ include_once 'test.php';
       Version: 0612.2016
   */
 
-  include_once "pdo_h.php";
-  include_once "backend_classes_h.php";
-  include_once "frontend_classes_h.php";
+// include_once "../headfiles/pdo_h.php";
+  include_once "../headfiles/backend_classes_h.php";
+//  include_once "../headfiles/frontend_classes_h.php";
 
 
   $language = $_POST['lcode'];
