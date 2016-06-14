@@ -12,8 +12,19 @@
 
 </head>
 <?php
+include_once "../headfiles/backend_classes_h.php";
 include_once 'test.php';
+$q = new Query;
+echo "<h1>Hey, ". $_COOKIE['user'] ."! here is your favourite authors! </h1>";
+$results = $q->getFavAuthors( $_COOKIE['user'], 'eng');
+foreach($results as $row)
+	{
+		echo '<br>';
+		var_dump($row);
+		echo '<br>';
+		echo $row->toHTMLTableRow();
+	}
 ?>
-<h1>Hey! here is your favourite authors! </h1>
- <li><a>'insert code here'</a></li>
+
+
 </html>
