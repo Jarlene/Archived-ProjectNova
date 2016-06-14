@@ -169,7 +169,7 @@ class Comment {
 
     public function toHTMLTableRow(){
         return '<tr>
-                    <td><blockquote>'.$this->Content.'</blockquote><br>'.$this->TStamp.'</td>
+                    <td><blockquote>'.$this->Content.'</blockquote>'.$this->TStamp.'</td>
                 </tr>';
     }
 }
