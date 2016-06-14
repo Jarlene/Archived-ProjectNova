@@ -83,4 +83,27 @@ var_dump($r);
 echo "<h1>Change FavAuthor</h1>";
 $r =  $q->changeFavAuthor('adam','Nagatsuki_Tappei');
 var_dump($r);
+
+
+echo "<h1>getFavBooks</h1>";
+$results = $q->getFavBooks( 'chashaobao', 'eng');
+foreach($results as $row)
+	{
+		echo '<br>';
+		var_dump($row);
+		echo '<br>';
+		echo $row->toHTMLTableRow();
+	}
+
+
+echo "<h1>getFavAuthors</h1>";
+$results = $q->getFavAuthors( 'adam', 'eng');
+foreach($results as $row)
+	{
+		echo '<br>';
+		var_dump($row);
+		echo '<br>';
+		echo $row->toHTMLTableRow();
+	}
+
 ?>

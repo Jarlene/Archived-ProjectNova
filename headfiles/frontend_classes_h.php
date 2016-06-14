@@ -26,7 +26,7 @@ class SearchResult {
     public $BRelease = '-';
     public $BUpdate = '-';
 
-    private $BookDetailsURL = 'placeholder.php';
+    private $BookDetailsURL = 'bookinfo.php';
     private $AuthorDetailsURL = 'placeholder.php';
     private $FilterByGenreURL = 'placeholder.php';
 
@@ -64,7 +64,7 @@ class BookDetail {
     public $BUpdate = '-';
     public $BDesc = '-';
 
-    private $BookDetailsURL = 'placeholder.php';
+    private $BookDetailsURL = 'bookinfo.php';
     private $AuthorDetailsURL = 'placeholder.php';
     private $FilterByGenreURL = 'placeholder.php';
 
@@ -141,7 +141,7 @@ class AuthorDetail {
     public $LCode = 'eng';
     public $ADesc = '-';
 
-    private $BookDetailsURL = 'placeholder.php';
+    private $BookDetailsURL = 'bookinfo.php';
     private $AuthorDetailsURL = 'placeholder.php';
     private $FilterByGenreURL = 'placeholder.php';
 
@@ -178,6 +178,45 @@ class DummyCMT extends Comment{
     public function toHTMLTableRow(){
         return '<tr>
                     <td colspan = "42"> - No commnet yet.</td>
+                </tr>';
+    }
+}
+
+
+
+class FavBook {
+    public $BID = '-';
+    public $BName = '-';
+    public $AID = '-';
+    public $AName = '-';
+    public $Date = '-';
+    public $LCode = '-';
+
+    private $BookDetailsURL = 'bookinfo.php';
+    private $AuthorDetailsURL = 'placeholder.php';
+
+    public function toHTMLTableRow(){
+        return '<tr>
+                    <td><a href="'.$this->BookDetailsURL.'?bid='.$this->BID.'&lcode='.$this->LCode.'">'.$this->BName.'</a></td>
+                    <td><a href="'.$this->AuthorDetailsURL.'?bid='.$this->AID.'&lcode='.$this->LCode.'">'.$this->AName.'</a></td>
+                    <td>'.$this->Date.'</td>
+                </tr>';
+    }
+}
+
+
+class FavAuthor {
+    public $AID = '-';
+    public $AName = '-';
+    public $Date = '-';
+    public $LCode = '-';
+
+    private $AuthorDetailsURL = 'placeholder.php';
+
+    public function toHTMLTableRow(){
+        return '<tr>
+                    <td><a href="'.$this->AuthorDetailsURL.'?bid='.$this->AID.'&lcode='.$this->LCode.'">'.$this->AName.'</a></td>
+                    <td>'.$this->Date.'</td>
                 </tr>';
     }
 }

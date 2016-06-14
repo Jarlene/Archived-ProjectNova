@@ -339,5 +339,41 @@ class Query {
 		
 		return true;
 	}
+
+	public function getFavBooks($username, $lcode){
+		try{$dbh = _db_connect();
+		$stmt = $dbh->prepare(
+			"SELECT BID, BName, AID, AName, AddedAt, LCode
+			FROM FAVBooks NATURAL JOIN Books NATURAL JOIN BookDetails NATURAL JOIN Authors
+			Where UserName = :uid AND LCode = :lang");
+		$stmt->bindParam(':uid', $username);
+		$stmt->bindParam(':lang', $lcode);
+		$stmt->execute();
+
+		// *Disconnect from the database
+		_db_commit($dbh);} catch(Exception $e) {_db_error($dbh,$e);}
+
+		$stmt->setFetchMode(PDO::FETCH_INTO, new FavBook);
+		
+		return $stmt;
+	}
+
+	public function getFavAuthors($username, $lcode){
+		try{$dbh = _db_connect();
+		$stmt = $dbh->prepare(
+			"SELECT AID, AName, AddedAt, LCode
+			FROM FAVAuthors NATURAL JOIN Authors
+			Where UserName = :uid AND LCode = :lang");
+		$stmt->bindParam(':uid', $username);
+		$stmt->bindParam(':lang', $lcode);
+		$stmt->execute();
+
+		// *Disconnect from the database
+		_db_commit($dbh);} catch(Exception $e) {_db_error($dbh,$e);}
+
+		$stmt->setFetchMode(PDO::FETCH_INTO, new FAVAuthor);
+		
+		return $stmt;
+	}	
 }
 ?>
