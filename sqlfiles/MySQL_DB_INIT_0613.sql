@@ -260,10 +260,12 @@ insert into Links values('http://www.worldcat.org/title/three-body-problem/oclc/
 
 -- Members Table
 -- 
+insert into Members values( 'admin', sha1('admin'), 'eng', null);
 insert into Members values( 'adam', sha1('awsome123'), 'zho', null);
 insert into Members values( 'bob', sha1('greatpassword'), 'eng', null);
 insert into Members values( 'chashaobao', sha1('chashaobao'), 'jpn', null);
 insert into Members values( 'guest', sha1('guest'), null, null);
+
 
 -- HSBooks Table
 -- 

@@ -48,6 +48,15 @@ function yeildIfInvalidUser(){
         </SCRIPT>";
   }
 }
+
+function validateAdmin(){
+  $u = isValidUser();
+  if ($u){
+    if ($u['UserName'] == 'admin')
+      {return true;}
+  }
+  return false;
+}
 ?>
 
 </head>
@@ -63,6 +72,7 @@ function yeildIfInvalidUser(){
   
       <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">
 <?php
+
 if(isset($_COOKIE['user'])){
   echo 'Hi,'. $_COOKIE['user'];
 }else{
@@ -82,6 +92,11 @@ if(isset($_COOKIE['user'])){
         </ul>
       </li>
      <li><a href="search.php">Search</a></li>
+<?php
+if(validateAdmin()){
+  echo '<li><a href="admin/manage.php">Admin Panel</a></li>';
+}
+?>
     </ul>
   </div>
 </nav>
