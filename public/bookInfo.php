@@ -38,10 +38,8 @@ p{
 
 
 <?php
-//include_once "../headfiles/pdo_h.php";
-include_once "../headfiles/backend_classes_h.php";
-include_once "test.php";
-//include_once "../headfiles/frontend_classes_h.php";
+require_once "../headfiles/backend_classes_h.php";
+require_once "test.php";
 
 $language =$_GET["lcode"];
 //$language ='eng';

@@ -38,9 +38,7 @@
       Version: 0612.2016
   */
 
-// include_once "../headfiles/pdo_h.php";
-  include_once "../headfiles/backend_classes_h.php";
-//  include_once "../headfiles/frontend_classes_h.php";
+  require_once "../headfiles/backend_classes_h.php";
 
 
   $language = $_POST['lcode'];

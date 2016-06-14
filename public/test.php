@@ -10,7 +10,8 @@
 <link href="css/signin.css" rel="stylesheet">
 
 <?php
-require_once('connect.php');
+require_once "../headfiles/connect.php";
+
 $username = $_COOKIE['user'];
  $insertsql = "SELECT * FROM Members WHERE username='$username'";
  $res = mysqli_query($connect,$insertsql);

@@ -12,8 +12,8 @@
 
 </head>
 <?php
-include_once "../headfiles/backend_classes_h.php";
-include_once 'test.php';
+require_once "../headfiles/backend_classes_h.php";
+require_once "test.php";
 $q = new Query;
 echo "<h1>Hey, ". $_COOKIE['user'] ."! here is your favourite books! </h1>";
 $results = $q->getFavBooks( $_COOKIE['user'], 'eng');
