@@ -10,7 +10,7 @@
   $rows= mysqli_num_rows($res);
   //var_dump($rows);
 
-  if($res){
+  if($rows){
     SetCookie("user", "$username", time()+3600);
     header("location:test.php");
     exit;
