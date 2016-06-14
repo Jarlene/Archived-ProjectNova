@@ -1,5 +1,5 @@
 <?php
-  require_once('../../headfiles/connect.php');
+  require_once('../connect.php');
 
   $username = $_POST['username'];
   $password = $_POST['password'];
@@ -24,7 +24,7 @@
   if(mysqli_query($connect,$insertsql)){
     echo '<script type="text/javascript">';
     echo 'alert("register successfully, please login in your account");';
-    echo 'window.location.href = "../index.php";';
+    echo 'window.location.href = "index.php";';
     echo '</script>';
   } else {
     echo '<script type="text/javascript">';

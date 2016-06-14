@@ -19,7 +19,7 @@
     Preferred language:
                   <select name="lcode">
                       <?php
-                        require_once "../../headfiles/connect.php";
+                        require_once('../connect.php');
                         $query = "select distinct LCode from Languages";
                         $result = mysqli_query($connect, $query);
                         //var_dump($result);
@@ -38,7 +38,9 @@
       Version: 0612.2016
   */
 
-require_once "../../headfiles/backend_classes_h.php";
+// include_once "../headfiles/pdo_h.php";
+  include_once "../headfiles/backend_classes_h.php";
+//  include_once "../headfiles/frontend_classes_h.php";
 
 
   $language = $_POST['lcode'];

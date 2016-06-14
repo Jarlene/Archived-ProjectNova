@@ -22,7 +22,7 @@
 			<input type="checkbox" value="remember-me"> Remeber me
 		</label>
 	</form>
-	<form class="form-signin" role="form" name="form" action="./user/register.php" method="post">
+	<form class="form-signin" role="form" name="form" action="register.php" method="post">
 		<button class="btn btn-lg btn-warning btn-block" type="botton">register</button>
 	</form>
 

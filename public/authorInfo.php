@@ -20,26 +20,29 @@ th, td {
     padding: 5px;
 }
 table{
-    width: 60%;
+    width: 70%;
 }
 p{
   font-size: 16px;
 }
+#AuthorDetail{
+    font-size: 17px;
+    width: 70%;
+    
+}
+
 </style>
 </head>
 
 <body>
-
-
 <center>
 
 
-
-
-
 <?php
-require_once "../../headfiles/backend_classes_h.php";
-require_once "../../headfiles/test.php";
+//include_once "../headfiles/pdo_h.php";
+include_once "../headfiles/backend_classes_h.php";
+include_once "test.php";
+//include_once "../headfiles/frontend_classes_h.php";
 
 $language =$_GET["lcode"];
 //$language ='eng';
@@ -48,17 +51,18 @@ $language = $_POST['lang'];
 }
 
 $q = new Query;
-$BID=$_GET["bid"];
+$AID=$_GET["aid"];
 //$BID='Re_Zero_Novels';
-$obj = $q->getBook($BID,$language);
-$links =  $q->getBookLinks($BID, $language);
-$comments = $q->getBookComments($BID);
+$obj = $q->getAuthor($AID,$language);
+$comments = $q->getAuthorComments($AID);
 ?>
 
-<div id="BookDetail">
+<div id="AuthorDetail">
+
 <?php
     echo $obj->toHTMLDivision();
 ?>
+
 </div>
 
 
@@ -82,12 +86,12 @@ Choose your reading language:
 <br>
 
 <!-- Bookmark Links Here  -->
-<div id="AddBookMark">
+<div id="AddAuthorMark">
 <?php
 if(isset($_POST['favor'])){
-$favorstate1=$q->isFavBook($_COOKIE['user'],$BID);
-$q->changeFavBook($_COOKIE['user'],$BID);
-$favorstate2=$q->isFavBook($_COOKIE['user'],$BID);
+$favorstate1=$q->isFavAuthor($_COOKIE['user'],$AID);
+$q->changeFavAuthor($_COOKIE['user'],$AID);
+$favorstate2=$q->isFavAuthor($_COOKIE['user'],$AID);
 if($favorstate1==$favorstate2){
   echo "add or delete failed";
 }else{if ($favorstate1==false) {
@@ -106,23 +110,9 @@ if($favorstate1==$favorstate2){
 
 <br>
 
-<div id="BookLinks">
-<table id="BookLinksTable">
-  <caption color="orange">Available Links:</caption>
-  <tr>
-    <th>Type</th>
-    <th>URL</th>
-  </tr>
-<?php
-    foreach ($links as $r) {
-        echo $r->toHTMLTableRow();
-    }
-?>
-</div>
 
-<div id="BookComments">
-
-<table id="BookCommentTable">
+<div id="AuthorComments">
+<table id="AuthorCommentTable">
   <p>Comments:</p>
     <?php
         foreach ($comments as $r) {
@@ -144,7 +134,7 @@ if($favorstate1==$favorstate2){
 <font color="orange">
 <?php
 if(isset($_POST['comment'])){
-$status=$q->addBookComment($BID,$_POST["comment"]);
+$status=$q->addAuthorComment($AID,$_POST["comment"]);
 if(!$status){
   echo "upload comments error";
 }else{

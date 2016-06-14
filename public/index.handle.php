@@ -1,5 +1,5 @@
 <?php
-  require_once('../headfiles/connect.php');
+  require_once('../connect.php');
 
   $username = $_POST['username'];
   $password = $_POST['password'];

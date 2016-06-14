@@ -12,12 +12,11 @@
 
 </head>
 <?php
-require_once "../../headfiles/backend_classes_h.php";
-require_once "../../headfiles/test.php";
-
+include_once "../headfiles/backend_classes_h.php";
+include_once 'test.php';
 $q = new Query;
-echo "<h1>Hey, ". $_COOKIE['user'] ."! here is your favourite books! </h1>";
-$results = $q->getFavBooks( $_COOKIE['user'], 'eng');
+echo "<h1>Hey, ". $_COOKIE['user'] ."! here is your favourite authors! </h1>";
+$results = $q->getFavAuthors( $_COOKIE['user'], 'eng');
 foreach($results as $row)
 	{
 		echo '<br>';
