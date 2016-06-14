@@ -47,15 +47,15 @@ class Query {
 		$stmt = null;
 		if (!$kwds){
 			$stmt = $dbh->prepare(
-				"SELECT b.BID,bd.BName,b.AID,a.AName,bd.LCode,b.GCode,g.GName,bd.BRelease,bd.BUpdate
-				FROM Books b,BookDetails bd, Authors a, Genres g 
-				Where b.BID = bd.BID AND b.AID = a.AID AND b.GCode = g.GCode AND bd.LCode = :lang AND a.LCode = :lang AND g.LCode = :lang 
-				Order by bd.BName");
+				"SELECT BID, BName, AID, AName, LCode, GCode, GName, BRelease, BUpdate, GLink
+				FROM Books NATURAL JOIN BookDetails NATURAL JOIN Authors NATURAL JOIN Genres
+				Where LCode = :lang
+				Order by BName;");
 			$stmt->bindParam(':lang', $lCode);
 			$stmt->execute();
 		} else {
 			$stmt = $dbh->prepare(
-				"SELECT BID, BName, AID, AName, LCode, GCode, GName, BRelease, BUpdate
+				"SELECT BID, BName, AID, AName, LCode, GCode, GName, BRelease, BUpdate, GLink
 				From (  Select BID
 						From BookDetails
 						Where BName like :q1 AND BName like :q2 AND BName like :q3
@@ -94,7 +94,7 @@ class Query {
 		try{$dbh = _db_connect();
 
 		$stmt = $dbh->prepare(
-			"SELECT BID, BName, AID, AName, LCode, GCode, GName, ORelease, BRelease, WCount, BUpdate, BDesc
+			"SELECT BID, BName, AID, AName, LCode, GCode, GName, ORelease, BRelease, WCount, BUpdate, BDesc, GLink
 			FROM Books NATURAL JOIN Authors NATURAL JOIN Genres NATURAL JOIN BookDetails
 			WHERE BID = :bid AND LCode = :lang");
 		$stmt->bindParam(':bid', $BID);

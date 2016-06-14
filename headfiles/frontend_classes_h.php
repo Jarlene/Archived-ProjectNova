@@ -16,7 +16,6 @@
 */
 $BookDetailsURL = 'bookInfo.php';
 $AuthorDetailsURL = 'authorInfo.php';
-$FilterByGenreURL = 'placeholder.php';
 
 class SearchResult {
     public $BID = '-';
@@ -28,13 +27,14 @@ class SearchResult {
     public $GName = '-';
     public $BRelease = '-';
     public $BUpdate = '-';
+    public $GLink = '-';
 
 
     public function toHTMLTableRow(){
         return '<tr>
                     <td><a href="'.$GLOBALS['BookDetailsURL'].'?bid='.$this->BID.'&lcode='.$this->LCode.'">'.$this->BName.'</a></td>
                     <td><a href="'.$GLOBALS['AuthorDetailsURL'].'?aid='.$this->AID.'&lcode='.$this->LCode.'">'.$this->AName.'</a></td>
-                    <td><a href="'.$GLOBALS['FilterByGenreURL'].'?gcode='.$this->GCode.'">'.$this->GName.'</a></td>
+                    <td><a href="'.$this->GLink.'">'.$this->GName.'</a></td>
                     <td>'.$this->BRelease.'</td>
                     <td>'.$this->BUpdate.'</td>
                 </tr>';
@@ -63,6 +63,7 @@ class BookDetail {
     public $WCount = '-';
     public $BUpdate = '-';
     public $BDesc = '-';
+    public $GLink = '-';
 
     public function getDetailsInOtherLanguageVersion($LCode){
         return $GLOBALS['BookDetailsURL'].'?bid='.$this->BID.'&lcode='.$LCode;
@@ -77,7 +78,7 @@ class BookDetail {
                   </tr>
                   <tr>
                     <td>Genre</td>
-                    <td><a href="'.$GLOBALS['FilterByGenreURL'].'?gcode='.$this->GCode.'">'.$this->GName.'</a></td>
+                    <td><a href="'.$this->GLink.'">'.$this->GName.'</a></td>
                   </tr>
                   <tr>
                     <td>Original Release</td>
