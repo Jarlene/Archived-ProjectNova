@@ -1,22 +1,23 @@
 <?php
-  require_once "../headfiles/connect.php";
+  // require_once "../headfiles/connect.php";
 
   $username = $_POST['username'];
   $password = $_POST['password'];
   $hashpw=sha1($password);
-  $insertsql = "SELECT * FROM Members WHERE username='$username' and userpass='$hashpw'";
-  //echo $insertsql;
-  $res = mysqli_query($connect,$insertsql);
-  $rows= mysqli_num_rows($res);
-  //var_dump($rows);
 
-  if($rows){
+  require_once('../headfiles/pdo_h.php');
+  try{$dbh = _db_connect();
+  $stmt = $dbh->prepare("SELECT * FROM Members WHERE username=:uid AND userpass=:hashpw");
+  $stmt->bindParam(':uid', $username);
+  $stmt->bindParam(':hashpw', $hashpw);
+  $stmt->execute();
+  _db_commit($dbh);} catch(Exception $e) {_db_error($dbh,$e);}
+
+  if($stmt->fetch()){
     SetCookie("user", "$username", time()+3600);
     header("location:test.php");
     exit;
   } else {
     echo "Login fail, please try again.";
   }
-  mysqli_free_result($res);
-  mysqli_close($connect);
 ?>
