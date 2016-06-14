@@ -1,5 +1,5 @@
 <?php
-  require_once('../connect.php');
+  require_once('../../headfiles/connect.php');
 
   if( empty($_POST['bid'])
       ||

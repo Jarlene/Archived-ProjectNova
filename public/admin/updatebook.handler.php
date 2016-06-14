@@ -1,5 +1,5 @@
 <?php
-  require_once('../connect.php');
+  require_once('../../headfiles/connect.php');
 
   $bid = $_POST['bid'];
   $aid = $_POST['aid'];

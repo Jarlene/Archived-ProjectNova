@@ -32,7 +32,7 @@
 </nav>
 
 <?php
-  require_once("../connect.php");
+  require_once('../../headfiles/connect.php');
   $books = "select * from Books order by BID desc";
   $querybooks = mysqli_query($connect, $books);
   //var_dump($query);

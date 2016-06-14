@@ -1,5 +1,5 @@
 <?php
-  require_once('../connect.php');
+  require_once('../../headfiles/connect.php');
   $aid = $_GET['aid'];
   $lcode = $_GET['lcode'];
   // echo $bid;

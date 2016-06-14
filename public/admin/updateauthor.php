@@ -8,7 +8,7 @@
             <h1>Update an author</h1>
         Author ID:             <input type="text" name="aid"
                                   value=<?php
-                                          require_once('../connect.php');
+                                          require_once('../../headfiles/connect.php');
                                           $aid = $_GET['aid'];
                                           // echo $bid;
 

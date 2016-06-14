@@ -11,7 +11,7 @@
         Author ID:             <input type="text" name="aid" id="aid"/><br/>
         Language:              <select name="language">
                                   <?php
-                                    require_once('/../../headfiles/connect.php');
+                                    require_once('../../headfiles/connect.php');
                                     $query = "select distinct LCode from Languages";
                                     $result = mysqli_query($connect, $query);
                                     //var_dump($result);

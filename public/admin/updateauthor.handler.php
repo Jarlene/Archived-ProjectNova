@@ -1,5 +1,5 @@
 <?php
-  require_once('../connect.php');
+  require_once('../../headfiles/connect.php');
   $aid = $_POST['aid'];
   $language = $_POST['language'];
   $aname = $_POST['aname'];

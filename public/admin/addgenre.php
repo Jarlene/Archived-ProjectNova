@@ -8,7 +8,7 @@
         GCode:          <input type="text" name="gcode" id="gcode"/><br/>
         Language:       <select name="lcode">
                           <?php
-                            require_once('../connect.php');
+                            require_once('../../headfiles/connect.php');
                             $query = "select distinct LCode from Languages";
                             $result = mysqli_query($connect, $query);
                             //var_dump($result);

@@ -5,7 +5,7 @@
             <h1>Add a new bookdetail</h1>
         Book ID:       <select name="bid">
                           <?php
-                            require_once('../connect.php');
+                            require_once('../../headfiles/connect.php');
                             $query = "select distinct BID from Books";
                             $result = mysqli_query($connect, $query);
                             //var_dump($result);
@@ -16,7 +16,7 @@
         　　            </select><br/>
         Language:      <select name="lcode">
                           <?php
-                            require_once('../connect.php');
+                            require_once('../../headfiles/connect.php');
                             $query = "select distinct LCode from Languages";
                             $result = mysqli_query($connect, $query);
                             //var_dump($result);

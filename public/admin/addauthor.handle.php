@@ -1,5 +1,5 @@
 <?php
-  require_once('/../../headfiles/connect.php');
+  require_once('../../headfiles/connect.php');
   if(!(isset($_POST['aid']) && (!empty($_POST['aid']))
       && (!empty($_POST['language']))
       && (!empty($_POST['aname']))

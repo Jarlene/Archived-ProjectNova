@@ -6,7 +6,7 @@
         Book ID:       <input type="text" name="bid" id="bid"/><br/>
         Author ID:     <select name="aid">
                           <?php
-                            require_once('../connect.php');
+                            require_once('../../headfiles/connect.php');
                             $query = "select distinct AID from Authors";
                             $result = mysqli_query($connect, $query);
                             //var_dump($result);
@@ -17,7 +17,7 @@
         　　            </select><br/>
         Genre:         <select name="gcode">
                           <?php
-                            require_once('../connect.php');
+                            require_once('../../headfiles/connect.php');
                             $query = "select distinct GCode from Genres";
                             $result = mysqli_query($connect, $query);
                             //var_dump($result);

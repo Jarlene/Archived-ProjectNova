@@ -1,5 +1,5 @@
 <?php
-  require_once('../connect.php');
+  require_once('../../headfiles/connect.php');
 
   if(!(isset($_POST['bid']) && (!empty($_POST['bid']))
       && (!empty($_POST['aid'])) && (!empty($_POST['gcode']))
