@@ -26,14 +26,14 @@ class SearchResult {
     public $BRelease = '-';
     public $BUpdate = '-';
 
-    private $BookDetailsURL = 'bookinfo.php';
-    private $AuthorDetailsURL = 'placeholder.php';
+    private $BookDetailsURL = 'bookInfo.php';
+    private $AuthorDetailsURL = 'authorInfo.php';
     private $FilterByGenreURL = 'placeholder.php';
 
     public function toHTMLTableRow(){
         return '<tr>
                     <td><a href="'.$this->BookDetailsURL.'?bid='.$this->BID.'&lcode='.$this->LCode.'">'.$this->BName.'</a></td>
-                    <td><a href="'.$this->AuthorDetailsURL.'?bid='.$this->AID.'&lcode='.$this->LCode.'">'.$this->AName.'</a></td>
+                    <td><a href="'.$this->AuthorDetailsURL.'?aid='.$this->AID.'&lcode='.$this->LCode.'">'.$this->AName.'</a></td>
                     <td><a href="'.$this->FilterByGenreURL.'?gcode='.$this->GCode.'">'.$this->GName.'</a></td>
                     <td>'.$this->BRelease.'</td>
                     <td>'.$this->BUpdate.'</td>
@@ -64,8 +64,8 @@ class BookDetail {
     public $BUpdate = '-';
     public $BDesc = '-';
 
-    private $BookDetailsURL = 'bookinfo.php';
-    private $AuthorDetailsURL = 'placeholder.php';
+    private $BookDetailsURL = 'bookInfo.php';
+    private $AuthorDetailsURL = 'authorInfo.php';
     private $FilterByGenreURL = 'placeholder.php';
 
     public function getDetailsInOtherLanguageVersion($LCode){
@@ -77,7 +77,7 @@ class BookDetail {
                 <table id="details_table">
                   <tr>
                     <td>Author</td>
-                    <td><a href="'.$this->AuthorDetailsURL.'?bid='.$this->AID.'">'.$this->AName.'</a></td>
+                    <td><a href="'.$this->AuthorDetailsURL.'?aid='.$this->AID.'">'.$this->AName.'</a></td>
                   </tr>
                   <tr>
                     <td>Genre</td>
@@ -141,12 +141,12 @@ class AuthorDetail {
     public $LCode = 'eng';
     public $ADesc = '-';
 
-    private $BookDetailsURL = 'bookinfo.php';
-    private $AuthorDetailsURL = 'placeholder.php';
+    private $BookDetailsURL = 'bookInfo.php';
+    private $AuthorDetailsURL = 'authorInfo.php';
     private $FilterByGenreURL = 'placeholder.php';
 
     public function getDetailsInOtherLanguageVersion($LCode){
-        return $this->AuthorDetailsURL.'?bid='.$this->AID.'&lcode='.$LCode;
+        return $this->AuthorDetailsURL.'?aid='.$this->AID.'&lcode='.$LCode;
     }
 
     public function toHTMLDivision(){
@@ -192,8 +192,8 @@ class FavBook {
     public $AddedAt = '-';
     public $LCode = '-';
 
-    private $BookDetailsURL = 'bookinfo.php';
-    private $AuthorDetailsURL = 'placeholder.php';
+     private $BookDetailsURL = 'bookInfo.php';
+    private $AuthorDetailsURL = 'authorInfo.php';
 
     public function toHTMLTableRow(){
         return '<tr>
@@ -215,7 +215,7 @@ class FavAuthor {
 
     public function toHTMLTableRow(){
         return '<tr>
-                    <td><a href="'.$this->AuthorDetailsURL.'?bid='.$this->AID.'&lcode='.$this->LCode.'">'.$this->AName.'</a></td>
+                    <td><a href="'.$this->AuthorDetailsURL.'?aid='.$this->AID.'&lcode='.$this->LCode.'">'.$this->AName.'</a></td>
                     <td>'.$this->AddedAt.'</td>
                 </tr>';
     }
