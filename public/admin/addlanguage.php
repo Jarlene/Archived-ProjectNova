@@ -1,39 +1,12 @@
-<?php
-  require_once("navbar.php");
- ?>
 <html lang="en">
-<head>
-		<meta charset="utf-8">
-		<link href="../css/style.css" rel='stylesheet' type='text/css' />
-    <link href="../css/bootstrap.min.css" rel="stylesheet">
-    <link href="../css/signin.css" rel="stylesheet">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-</head>
-<body>
-    <form method="post" action="addlanguage.handle.php" style="margin:5px 500px;">
-            <h3>Add a new language</h3>
-        <div class="control-group">
-              <label class="control-label">Language Code</label>
-              <div class="controls">
-                <input type="text" name="lcode" id="lcode"/>
-                <p class="help-block"></p>
-              </div>
-        </div>
-        <div class="control-group">
-              <label class="control-label">Language</label>
-              <div class="controls">
-                <input type="text" name="lname" id="lname"/>
-                <p class="help-block"></p>
-              </div>
-        </div>
-        <div class="control-group">
-              <label class="control-label">Home Page</label>
-              <div class="controls">
-                <textarea cols=40 rows=2 name="hpage"></textarea>
-                <p class="help-block"></p>
-              </div>
-        </div>
-         <input type="submit" value="submit"/>
+<meta http-equiv="Content-Type" content="text/html; charset=utf8">
+<body bgcolor="#ccc">
+    <form id="form1" name="form1" method="post" action="addlanguage.handle.php" style="margin:5px 500px;">
+            <h1>Add a new language</h1>
+        Language Code:  <input type="text" name="lcode" id="lcode"/><br/>
+        Language:       <input type="text" name="lname" id="lname"/><br/>
+        Home Page:     <textarea cols=40 rows=2 name="hpage"></textarea><br/><br/>
+             <input type="submit" value="submit"/>
     </form>
 </body>
 </html>
