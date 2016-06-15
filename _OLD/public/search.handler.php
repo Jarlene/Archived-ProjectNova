@@ -59,36 +59,52 @@ require_once('test.php');
 	</form>
 </div>
 </form>
-<?php
 
-require_once('../headfiles/backend_classes_h.php');
+<div class="container" id = 'main'>
+  <div class="well well-lg"  id = 'Favs'>
+    <div class="page-header" id = 'FavTitle'>
+      <?php
+      echo "<h1>Hey, ". $_COOKIE['user'] ."! Here is the search result! </h1> <br>";
+      ?>
+    </div>
 
-$language = $_POST['lcode'];
-$search = $_POST['search'];
+    <div class="row"  id = 'FavTables'>
+      <div class="col-sm-8"  id = 'FavoriteBooksDiv'>
+        <table class ="table table-VNM" id="FAVBooksTable">
+          <!-- <cpation> Your favorate books:</cpation> -->
+          <thead>
+            <tr>
+              <th>Book Title</th>
+              <th>Author</th>
+              <th>Genre</th>
+              <th>Release</th>
+              <th>Update</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Generate table data here -->
+            <?php
 
-$q = new Query;
-echo "<h1>Search</h1>";
-$results = $q->search($search, $language);
+            require_once('../headfiles/backend_classes_h.php');
 
-echo '
-<div id="SearchResult">
-<table id="SearchTable">
-  <tr>
-    <th>Book Title</th>
-    <th>Author</th>
-    <th>Genre</th>
-    <th>Release</th>
-    <th>Update</th>
-  </tr>';
+            $language = $_POST['lcode'];
+            $search = $_POST['search'];
 
-foreach($results as $row)
-	{
-			echo $row->toHTMLTableRow();
-	}
+            $q = new Query;
+            $results = $q->search($search, $language);
+              
+            foreach($results as $row)
+              {
+                  echo $row->toHTMLTableRow();
+              }
+            ?>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
 
-echo "
-</table>
-</div>";
-?>
+
 </body>
 </html>
