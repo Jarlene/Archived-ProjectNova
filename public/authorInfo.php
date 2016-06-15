@@ -53,9 +53,17 @@ $language = $_POST['lang'];
 
 $q = new Query;
 $AID=$_GET["aid"];
-//$BID='Re_Zero_Novels';
 $obj = $q->getAuthor($AID,$language);
 $comments = $q->getAuthorComments($AID);
+
+// Update user history
+if ($obj->AID != '-'){
+  $user = null;
+  if(isset($_COOKIE['user'])){
+      $user = $_COOKIE['user'];}
+  $q->viewAuthor($AID,$user);
+}
+
 ?>
 <div id="AuthorHeading">
 <font color="orange" size="6">Author information</font>

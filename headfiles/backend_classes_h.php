@@ -454,5 +454,78 @@ class Query {
 		return true;
 	}
 
+	
+	public function viewAuthor($AID, $user){
+		try{$dbh = _db_connect();
+
+		// check if user valid
+		if ($user){
+			$stmt = $dbh->prepare("SELECT * FROM Members WHERE UserName=:uid");
+    		$stmt->bindParam(':uid', $user);
+    		$stmt->execute();
+    		if ($stmt->fetch()){
+    			// Update user history
+				$stmt = $dbh->prepare("SELECT * FROM HSAuthors WHERE UserName=:uid AND AID = :aid");
+				$stmt->bindParam(':uid', $user);
+				$stmt->bindParam(':aid', $AID);
+				$stmt->execute();
+				if ($stmt->fetch()){
+					// User has already visited the book
+					$stmt = $dbh->prepare("UPDATE HSAuthors SET LastVisit = NOW() WHERE UserName=:uid AND AID = :aid");
+					$stmt->bindParam(':uid', $user);
+					$stmt->bindParam(':aid', $AID);
+					$stmt->execute();
+				} else {
+					// User had never visited the book
+					$stmt = $dbh->prepare("INSERT INTO HSAuthors VALUES(:uid, :aid, NOW())");
+					$stmt->bindParam(':uid', $user);
+					$stmt->bindParam(':aid', $AID);
+					$stmt->execute();
+				}
+    		}
+		}
+		_db_commit($dbh);} catch(Exception $e) {_db_error($dbh,$e);}
+
+		return true;
+	}
+
+
+	public function getBookVisitHistory($username, $lcode){
+		try{$dbh = _db_connect();
+		$stmt = $dbh->prepare(
+			"SELECT BID, BName, AID, AName, LastVisit as AddedAt, LCode
+			FROM HSBooks NATURAL JOIN Books NATURAL JOIN BookDetails NATURAL JOIN Authors
+			Where UserName = :uid AND LCode = :lang
+			ORDER BY LastVisit DESC");
+		$stmt->bindParam(':uid', $username);
+		$stmt->bindParam(':lang', $lcode);
+		$stmt->execute();
+
+		// *Disconnect from the database
+		_db_commit($dbh);} catch(Exception $e) {_db_error($dbh,$e);}
+
+		$stmt->setFetchMode(PDO::FETCH_INTO, new FavBook);
+		
+		return $stmt;
+	}
+
+	public function getAuthorVisitHistory($username, $lcode){
+		try{$dbh = _db_connect();
+		$stmt = $dbh->prepare(
+			"SELECT AID, AName, LastVisit as AddedAt, LCode
+			FROM HSAuthors NATURAL JOIN Authors
+			Where UserName = :uid AND LCode = :lang
+			ORDER BY LastVisit DESC");
+		$stmt->bindParam(':uid', $username);
+		$stmt->bindParam(':lang', $lcode);
+		$stmt->execute();
+
+		// *Disconnect from the database
+		_db_commit($dbh);} catch(Exception $e) {_db_error($dbh,$e);}
+
+		$stmt->setFetchMode(PDO::FETCH_INTO, new FAVAuthor);
+		
+		return $stmt;
+	}
 }
 ?>

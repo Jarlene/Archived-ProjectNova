@@ -5,13 +5,13 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
-#TB{
+#TB, #TSB{
     width:65%;
     height:100px;
     float:left;
     margin: 0 auto;
 }
-#TA{
+#TA, #TSA{
     width:30%;
     height:100px;
     float:left;
@@ -38,7 +38,7 @@ yeildIfInvalidUser();
 ?>
 
 <body>
-
+<div id = 'Favs'>
 <?php
 echo "<h1>Hey, ". $_COOKIE['user'] ."! Here are your favourite Books and Authors! </h1> <br>";
 ?>
@@ -85,6 +85,58 @@ echo "<h1>Hey, ". $_COOKIE['user'] ."! Here are your favourite Books and Authors
 </table>
 </div>
 </div>
+
+</div>
+
+<br>
+<h2>Your visit history: </h2> <br>
+
+<div id = 'Histories'>
+<div id='TSB'>
+<div id="hsb">
+<h3> Books:</h3>
+<table id="FavoriteBooks">
+  <tr>
+    <th>Book Title</th>
+    <th>Author</th>
+    <th>Last Visit</th>
+  </tr>
+
+<?php
+  require_once('../headfiles/backend_classes_h.php');
+  $q = new Query;
+  $results = $q->getBookVisitHistory($_COOKIE['user'], $_COOKIE['lang']);
+  foreach ($results as $r) {
+    echo $r->toHTMLTableRow();
+  }
+?>
+</table>
+</div>
+</div>
+
+<div id='TSA'>
+<div id="hsa">
+<h3> Authors:</h3>
+<table id="FavoriteAuthors">
+  <tr>
+    <th>Author</th>
+    <th>Last Visit</th>
+  </tr>
+
+<?php
+  require_once('../headfiles/backend_classes_h.php');
+  $q = new Query;
+  $results = $q->getAuthorVisitHistory($_COOKIE['user'], $_COOKIE['lang']);
+  foreach ($results as $r) {
+    echo $r->toHTMLTableRow();
+  }
+?>
+</table>
+</div>
+</div>
+
+</div>
+
 
 </body>
 </html>

@@ -83,7 +83,7 @@ if(isset($_COOKIE['user'])){
         <ul class="dropdown-menu">
 <?php
 if(isset($_COOKIE['user'])){
-  echo   '<li><a href=fav.php> MY Favourites </a></li>';
+  echo   '<li><a href=fav.php> Favourites & History </a></li>';
 }else{
   echo '<li><a href=index.php>Log in</a></li>';
 }
