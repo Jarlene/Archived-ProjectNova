@@ -27,11 +27,11 @@ function _db_commit(PDO &$dbh){
 
 // Exception handling function
 function _db_error(&$dbh, $ex){ 
- 	if (get_class($dbh) == 'PDO')
- 		$dbh->rollBack();
-  	echo "ERROR!: " , $ex->getMessage(), "\n";
+	if ($dbh){ 
+	 	if (get_class($dbh) == 'PDO')
+	 		$dbh->rollBack();}
+	echo '<br><br><div class="alert alert-danger"> <strong> ERROR!: </strong>'.$ex->getMessage().'</div>';
   	$dbh = null;
   	die();
 }
-
 ?>
