@@ -15,8 +15,8 @@
         - getBookComments($BID): Gets comments for the book and returns an array of Comment objects.
         - getAuhtorComments($BID): Gets comments for the author and returns an array of Comment objects.
 */
-include_once 'pdo_h.php';
-include_once 'frontend_classes_h.php';
+require_once 'pdo_h.php';
+require_once 'frontend_classes_h.php';
 
 class Query {
 
@@ -47,15 +47,15 @@ class Query {
 		$stmt = null;
 		if (!$kwds){
 			$stmt = $dbh->prepare(
-				"SELECT b.BID,bd.BName,b.AID,a.AName,bd.LCode,b.GCode,g.GName,bd.BRelease,bd.BUpdate
-				FROM Books b,BookDetails bd, Authors a, Genres g 
-				Where b.BID = bd.BID AND b.AID = a.AID AND b.GCode = g.GCode AND bd.LCode = :lang AND a.LCode = :lang AND g.LCode = :lang 
-				Order by bd.BName");
+				"SELECT BID, BName, AID, AName, LCode, GCode, GName, BRelease, BUpdate, GLink
+				FROM Books NATURAL JOIN BookDetails NATURAL JOIN Authors NATURAL JOIN Genres
+				Where LCode = :lang
+				Order by BName;");
 			$stmt->bindParam(':lang', $lCode);
 			$stmt->execute();
 		} else {
 			$stmt = $dbh->prepare(
-				"SELECT BID, BName, AID, AName, LCode, GCode, GName, BRelease, BUpdate
+				"SELECT BID, BName, AID, AName, LCode, GCode, GName, BRelease, BUpdate, GLink
 				From (  Select BID
 						From BookDetails
 						Where BName like :q1 AND BName like :q2 AND BName like :q3
@@ -94,7 +94,7 @@ class Query {
 		try{$dbh = _db_connect();
 
 		$stmt = $dbh->prepare(
-			"SELECT BID, BName, AID, AName, LCode, GCode, GName, ORelease, BRelease, WCount, BUpdate, BDesc
+			"SELECT BID, BName, AID, AName, LCode, GCode, GName, ORelease, BRelease, WCount, BUpdate, BDesc, GLink
 			FROM Books NATURAL JOIN Authors NATURAL JOIN Genres NATURAL JOIN BookDetails
 			WHERE BID = :bid AND LCode = :lang");
 		$stmt->bindParam(':bid', $BID);
@@ -374,6 +374,158 @@ class Query {
 		$stmt->setFetchMode(PDO::FETCH_INTO, new FAVAuthor);
 		
 		return $stmt;
-	}	
+	}
+
+	public function getAuthorShowcase($lcode){
+		try{$dbh = _db_connect();
+
+		$stmt = $dbh->prepare(
+			"SELECT DISTINCT AID, AName, LCode, count(*) as Favs
+			FROM FAVAuthors NATURAL JOIN Authors
+			WHERE LCode = :lang
+			GROUP BY AID
+			ORDER BY Favs DESC");
+		$stmt->bindParam(':lang', $lcode);
+		$stmt->execute();
+
+		_db_commit($dbh);} catch(Exception $e) {_db_error($dbh,$e);}
+
+		$stmt->setFetchMode(PDO::FETCH_INTO, new AuthorDetail);
+		return $stmt;
+	}
+
+	public function getBookShowcase($lcode){
+		try{$dbh = _db_connect();
+
+		$stmt = $dbh->prepare(
+			"SELECT DISTINCT BID, BName, AID, AName, LCode, GCode, GName, BRelease, BUpdate, GLink, Clicks, count(*) as Favs
+			FROM FAVBooks NATURAL JOIN Books NATURAL JOIN BookDetails NATURAL JOIN Authors NATURAL JOIN Genres
+			WHERE LCode = :lang
+			GROUP BY BID
+			ORDER BY Favs DESC");
+		$stmt->bindParam(':lang', $lcode);
+		$stmt->execute();
+
+		_db_commit($dbh);} catch(Exception $e) {_db_error($dbh,$e);}
+
+		$stmt->setFetchMode(PDO::FETCH_INTO, new BookShowcase);
+		return $stmt;
+	}
+	
+	public function viewBook($BID, $user){
+		try{$dbh = _db_connect();
+
+		// Update Clicks
+		$stmt = $dbh->prepare(
+			"UPDATE Books 
+  			SET Clicks = Clicks + 1 
+ 			WHERE BID = :bid");
+		$stmt->bindParam(':bid', $BID);
+		$stmt->execute();
+
+		// check if user valid
+		if ($user){
+			$stmt = $dbh->prepare("SELECT * FROM Members WHERE UserName=:uid");
+    		$stmt->bindParam(':uid', $user);
+    		$stmt->execute();
+    		if ($stmt->fetch()){
+    			// Update user history
+				$stmt = $dbh->prepare("SELECT * FROM HSBooks WHERE UserName=:uid AND BID = :bid");
+				$stmt->bindParam(':uid', $user);
+				$stmt->bindParam(':bid', $BID);
+				$stmt->execute();
+				if ($stmt->fetch()){
+					// User has already visited the book
+					$stmt = $dbh->prepare("UPDATE HSBooks SET LastVisit = NOW() WHERE UserName=:uid AND BID = :bid");
+					$stmt->bindParam(':uid', $user);
+					$stmt->bindParam(':bid', $BID);
+					$stmt->execute();
+				} else {
+					// User had never visited the book
+					$stmt = $dbh->prepare("INSERT INTO HSBooks VALUES(:uid, :bid, NOW())");
+					$stmt->bindParam(':uid', $user);
+					$stmt->bindParam(':bid', $BID);
+					$stmt->execute();
+				}
+    		}
+		}
+		_db_commit($dbh);} catch(Exception $e) {_db_error($dbh,$e);}
+
+		return true;
+	}
+
+	
+	public function viewAuthor($AID, $user){
+		try{$dbh = _db_connect();
+
+		// check if user valid
+		if ($user){
+			$stmt = $dbh->prepare("SELECT * FROM Members WHERE UserName=:uid");
+    		$stmt->bindParam(':uid', $user);
+    		$stmt->execute();
+    		if ($stmt->fetch()){
+    			// Update user history
+				$stmt = $dbh->prepare("SELECT * FROM HSAuthors WHERE UserName=:uid AND AID = :aid");
+				$stmt->bindParam(':uid', $user);
+				$stmt->bindParam(':aid', $AID);
+				$stmt->execute();
+				if ($stmt->fetch()){
+					// User has already visited the book
+					$stmt = $dbh->prepare("UPDATE HSAuthors SET LastVisit = NOW() WHERE UserName=:uid AND AID = :aid");
+					$stmt->bindParam(':uid', $user);
+					$stmt->bindParam(':aid', $AID);
+					$stmt->execute();
+				} else {
+					// User had never visited the book
+					$stmt = $dbh->prepare("INSERT INTO HSAuthors VALUES(:uid, :aid, NOW())");
+					$stmt->bindParam(':uid', $user);
+					$stmt->bindParam(':aid', $AID);
+					$stmt->execute();
+				}
+    		}
+		}
+		_db_commit($dbh);} catch(Exception $e) {_db_error($dbh,$e);}
+
+		return true;
+	}
+
+
+	public function getBookVisitHistory($username, $lcode){
+		try{$dbh = _db_connect();
+		$stmt = $dbh->prepare(
+			"SELECT BID, BName, AID, AName, LastVisit as AddedAt, LCode
+			FROM HSBooks NATURAL JOIN Books NATURAL JOIN BookDetails NATURAL JOIN Authors
+			Where UserName = :uid AND LCode = :lang
+			ORDER BY LastVisit DESC");
+		$stmt->bindParam(':uid', $username);
+		$stmt->bindParam(':lang', $lcode);
+		$stmt->execute();
+
+		// *Disconnect from the database
+		_db_commit($dbh);} catch(Exception $e) {_db_error($dbh,$e);}
+
+		$stmt->setFetchMode(PDO::FETCH_INTO, new FavBook);
+		
+		return $stmt;
+	}
+
+	public function getAuthorVisitHistory($username, $lcode){
+		try{$dbh = _db_connect();
+		$stmt = $dbh->prepare(
+			"SELECT AID, AName, LastVisit as AddedAt, LCode
+			FROM HSAuthors NATURAL JOIN Authors
+			Where UserName = :uid AND LCode = :lang
+			ORDER BY LastVisit DESC");
+		$stmt->bindParam(':uid', $username);
+		$stmt->bindParam(':lang', $lcode);
+		$stmt->execute();
+
+		// *Disconnect from the database
+		_db_commit($dbh);} catch(Exception $e) {_db_error($dbh,$e);}
+
+		$stmt->setFetchMode(PDO::FETCH_INTO, new FAVAuthor);
+		
+		return $stmt;
+	}
 }
 ?>

@@ -14,6 +14,8 @@
         - Commnet: Represent a single comment for a book or an author.
      - The Dummy* classes are all subclasses to the classes above, used for no result case return.
 */
+$BookDetailsURL = 'bookInfo.php';
+$AuthorDetailsURL = 'authorInfo.php';
 
 class SearchResult {
     public $BID = '-';
@@ -25,16 +27,14 @@ class SearchResult {
     public $GName = '-';
     public $BRelease = '-';
     public $BUpdate = '-';
+    public $GLink = '-';
 
-    private $BookDetailsURL = 'bookInfo.php';
-    private $AuthorDetailsURL = 'authorInfo.php';
-    private $FilterByGenreURL = 'placeholder.php';
 
     public function toHTMLTableRow(){
         return '<tr>
-                    <td><a href="'.$this->BookDetailsURL.'?bid='.$this->BID.'&lcode='.$this->LCode.'">'.$this->BName.'</a></td>
-                    <td><a href="'.$this->AuthorDetailsURL.'?aid='.$this->AID.'&lcode='.$this->LCode.'">'.$this->AName.'</a></td>
-                    <td><a href="'.$this->FilterByGenreURL.'?gcode='.$this->GCode.'">'.$this->GName.'</a></td>
+                    <td><a href="'.$GLOBALS['BookDetailsURL'].'?bid='.$this->BID.'&lcode='.$this->LCode.'">'.$this->BName.'</a></td>
+                    <td><a href="'.$GLOBALS['AuthorDetailsURL'].'?aid='.$this->AID.'&lcode='.$this->LCode.'">'.$this->AName.'</a></td>
+                    <td><a href="'.$this->GLink.'">'.$this->GName.'</a></td>
                     <td>'.$this->BRelease.'</td>
                     <td>'.$this->BUpdate.'</td>
                 </tr>';
@@ -50,6 +50,24 @@ class DummySR extends SearchResult{
     }
 }
 
+class BookShowcase extends SearchResult {
+    public $Clicks = 0;
+    public $Favs = 0;
+
+    public function toHTMLTableRow(){
+        return '<tr>
+                    <td><a href="'.$GLOBALS['BookDetailsURL'].'?bid='.$this->BID.'&lcode='.$this->LCode.'">'.$this->BName.'</a></td>
+                    <td><a href="'.$GLOBALS['AuthorDetailsURL'].'?aid='.$this->AID.'&lcode='.$this->LCode.'">'.$this->AName.'</a></td>
+                    <td><a href="'.$this->GLink.'">'.$this->GName.'</a></td>
+                    <td>'.$this->BRelease.'</td>
+                    <td>'.$this->BUpdate.'</td>
+                    <td>'.$this->Clicks.'</td>
+                    <td>'.$this->Favs.'</td>
+                </tr>';
+    }
+}
+
+
 class BookDetail {
     public $BID = '-';
     public $BName = '-';
@@ -63,13 +81,12 @@ class BookDetail {
     public $WCount = '-';
     public $BUpdate = '-';
     public $BDesc = '-';
-
-    private $BookDetailsURL = 'bookInfo.php';
-    private $AuthorDetailsURL = 'authorInfo.php';
-    private $FilterByGenreURL = 'placeholder.php';
+    public $GLink = '-';
+    public $Clicks = 0;
+    public $Favs =  0;
 
     public function getDetailsInOtherLanguageVersion($LCode){
-        return $this->BookDetailsURL.'?bid='.$this->BID.'&lcode='.$LCode;
+        return $GLOBALS['BookDetailsURL'].'?bid='.$this->BID.'&lcode='.$LCode;
     }
 
     public function toHTMLDivision(){
@@ -77,11 +94,11 @@ class BookDetail {
                 <table id="details_table">
                   <tr>
                     <td>Author</td>
-                    <td><a href="'.$this->AuthorDetailsURL.'?aid='.$this->AID.'">'.$this->AName.'</a></td>
+                    <td><a href="'.$GLOBALS['AuthorDetailsURL'].'?aid='.$this->AID.'&lcode='.$this->LCode.'">'.$this->AName.'</a></td>
                   </tr>
                   <tr>
                     <td>Genre</td>
-                    <td><a href="'.$this->FilterByGenreURL.'?gcode='.$this->GCode.'">'.$this->GName.'</a></td>
+                    <td><a href="'.$this->GLink.'">'.$this->GName.'</a></td>
                   </tr>
                   <tr>
                     <td>Original Release</td>
@@ -110,7 +127,7 @@ class BookDetail {
 // This class is for the case there is no result found.
 class DummyBD extends BookDetail{
     public function toHTMLDivision(){
-        return  '<h2>404. Ops, No such book！</h2>';
+        return  '<h2>404. Ops, No such book! </h2>';
     }
 }
 
@@ -140,25 +157,29 @@ class AuthorDetail {
     public $AName = '-';
     public $LCode = 'eng';
     public $ADesc = '-';
-
-    private $BookDetailsURL = 'bookInfo.php';
-    private $AuthorDetailsURL = 'authorInfo.php';
-    private $FilterByGenreURL = 'placeholder.php';
+    public $Favs = 0;
 
     public function getDetailsInOtherLanguageVersion($LCode){
-        return $this->AuthorDetailsURL.'?aid='.$this->AID.'&lcode='.$LCode;
+        return $GLOBALS['AuthorDetailsURL'].'?aid='.$this->AID.'&lcode='.$LCode;
     }
 
     public function toHTMLDivision(){
         return  '<h2>'.$this->AName.'</h2>
                 <p>'.$this->ADesc.'</p>';
     }
+
+    public function toHTMLTableRow(){
+        return '<tr>
+                    <td><a href="'.$GLOBALS['AuthorDetailsURL'].'?aid='.$this->AID.'&lcode='.$this->LCode.'">'.$this->AName.'</a></td>
+                    <td>'.$this->Favs.'</td>
+                </tr>';
+    }
 }
 
 // This class is for the case there is no result found.
 class DummyAD extends AuthorDetail{
     public function toHTMLDivision(){
-        return  '<h2>404. Ops, no such author！</h2>';
+        return  '<h2>404. Ops, no such author�?/h2>';
     }
 }
 
@@ -192,13 +213,10 @@ class FavBook {
     public $AddedAt = '-';
     public $LCode = '-';
 
-     private $BookDetailsURL = 'bookInfo.php';
-    private $AuthorDetailsURL = 'authorInfo.php';
-
     public function toHTMLTableRow(){
         return '<tr>
-                    <td><a href="'.$this->BookDetailsURL.'?bid='.$this->BID.'&lcode='.$this->LCode.'">'.$this->BName.'</a></td>
-                    <td><a href="'.$this->AuthorDetailsURL.'?bid='.$this->AID.'&lcode='.$this->LCode.'">'.$this->AName.'</a></td>
+                    <td><a href="'.$GLOBALS['BookDetailsURL'].'?bid='.$this->BID.'&lcode='.$this->LCode.'">'.$this->BName.'</a></td>
+                    <td><a href="'.$GLOBALS['AuthorDetailsURL'].'?aid='.$this->AID.'&lcode='.$this->LCode.'">'.$this->AName.'</a></td>
                     <td>'.$this->AddedAt.'</td>
                 </tr>';
     }
@@ -211,11 +229,9 @@ class FavAuthor {
     public $AddedAt = '-';
     public $LCode = '-';
 
-    private $AuthorDetailsURL = 'placeholder.php';
-
     public function toHTMLTableRow(){
         return '<tr>
-                    <td><a href="'.$this->AuthorDetailsURL.'?aid='.$this->AID.'&lcode='.$this->LCode.'">'.$this->AName.'</a></td>
+                    <td><a href="'.$GLOBALS['AuthorDetailsURL'].'?aid='.$this->AID.'&lcode='.$this->LCode.'">'.$this->AName.'</a></td>
                     <td>'.$this->AddedAt.'</td>
                 </tr>';
     }

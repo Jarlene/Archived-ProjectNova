@@ -8,13 +8,13 @@
     Author: Phoenix
     Version: 0612.2016
 */
-include 'mysql_login_info.ini';
+require_once 'mysql_login_info.ini';
 
 
 // Initialize PDO object and conncet to the server.
 // Open transation. Must call commit() after.
 function _db_connect(){
-	$dbh = new PDO('mysql:host=localhost;dbname=nova;charset=utf8', MYSQL_DB_USER, MYSQL_DB_PASS);
+	$dbh = new PDO(sprintf('mysql:host=%s;dbname=%s;charset=utf8', MYSQL_HOST, MYSQL_DB_DATABASE), MYSQL_DB_USER, MYSQL_DB_PASS);
 	$dbh->beginTransaction();
 	return $dbh;
 }
@@ -27,11 +27,11 @@ function _db_commit(PDO &$dbh){
 
 // Exception handling function
 function _db_error(&$dbh, $ex){ 
- 	if (get_class($dbh) == 'PDO')
- 		$dbh->rollBack();
-  	echo "ERROR!: " , $ex->getMessage(), "\n";
+	if ($dbh){ 
+	 	if (get_class($dbh) == 'PDO')
+	 		$dbh->rollBack();}
+	echo '<br><br><div class="alert alert-danger"> <strong> ERROR!: </strong>'.$ex->getMessage().'</div>';
   	$dbh = null;
   	die();
 }
-
 ?>

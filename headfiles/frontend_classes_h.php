@@ -91,7 +91,7 @@ class BookDetail {
 
     public function toHTMLDivision(){
         return  '<h2>'.$this->BName.'</h2>
-                <table id="details_table">
+                <table class ="table table-hover" id="details_table">
                   <tr>
                     <td>Author</td>
                     <td><a href="'.$GLOBALS['AuthorDetailsURL'].'?aid='.$this->AID.'&lcode='.$this->LCode.'">'.$this->AName.'</a></td>
@@ -118,6 +118,74 @@ class BookDetail {
                   </tr>
                   <tr>
                     <td>Description</td>
+                    <td><p>'.$this->BDesc.'</p></td>
+                  </tr>
+                </table>';
+    }
+
+    public function toHTMLDivisionZHO(){
+        return  '<h2>'.$this->BName.'</h2>
+                <table class ="table table-hover" id="details_table">
+                  <tr>
+                    <td>作者</td>
+                    <td><a href="'.$GLOBALS['AuthorDetailsURL'].'?aid='.$this->AID.'&lcode='.$this->LCode.'">'.$this->AName.'</a></td>
+                  </tr>
+                  <tr>
+                    <td>类别</td>
+                    <td><a href="'.$this->GLink.'">'.$this->GName.'</a></td>
+                  </tr>
+                  <tr>
+                    <td>原版发行</td>
+                    <td>'.$this->ORelease.'</td>
+                  </tr>
+                  <tr>
+                    <td>译版发行</td>
+                    <td>'.$this->BRelease.'</td>
+                  </tr>
+                  <tr>
+                    <td>字数</td>
+                    <td>'.$this->WCount.'</td>
+                  </tr>
+                  <tr>
+                    <td>更新时间</td>
+                    <td>'.$this->BUpdate.'</td>
+                  </tr>
+                  <tr>
+                    <td>简介</td>
+                    <td><p>'.$this->BDesc.'</p></td>
+                  </tr>
+                </table>';
+    }
+
+    public function toHTMLDivisionJPN(){
+        return  '<h2>'.$this->BName.'</h2>
+                <table class ="table table-hover" id="details_table">
+                  <tr>
+                    <td>著者</td>
+                    <td><a href="'.$GLOBALS['AuthorDetailsURL'].'?aid='.$this->AID.'&lcode='.$this->LCode.'">'.$this->AName.'</a></td>
+                  </tr>
+                  <tr>
+                    <td>ジャンル</td>
+                    <td><a href="'.$this->GLink.'">'.$this->GName.'</a></td>
+                  </tr>
+                  <tr>
+                    <td>オリジナルリリース</td>
+                    <td>'.$this->ORelease.'</td>
+                  </tr>
+                  <tr>
+                    <td>翻訳版リリース</td>
+                    <td>'.$this->BRelease.'</td>
+                  </tr>
+                  <tr>
+                    <td>ワードカウント</td>
+                    <td>'.$this->WCount.'</td>
+                  </tr>
+                  <tr>
+                    <td>更新</td>
+                    <td>'.$this->BUpdate.'</td>
+                  </tr>
+                  <tr>
+                    <td>簡単な紹介</td>
                     <td><p>'.$this->BDesc.'</p></td>
                   </tr>
                 </table>';
@@ -179,7 +247,7 @@ class AuthorDetail {
 // This class is for the case there is no result found.
 class DummyAD extends AuthorDetail{
     public function toHTMLDivision(){
-        return  '<h2>404. Ops, no such author�?/h2>';
+        return  '<h2>404. Ops, no such authorï¼?/h2>';
     }
 }
 
