@@ -35,7 +35,7 @@
 ?>
 
 <body>
-  <div class="container" id = 'main'>
+  <div class="container text-center" id = 'main'>
     <div class="jumbotron" id = 'AuthorInfos'>
       <div id="AuthorDetail">
         <h4>Author Information:</h4>
@@ -73,7 +73,7 @@
 
     <hr>
 
-    <div class="well" id="AddBookMark">
+    <div class="well text-center" id="AddBookMark">
       <?php
         if(isValidUser()){
           if(isset($_POST['favor'])){
