@@ -23,10 +23,9 @@
     header("location:search.php");
     exit;
   } else {
-
-     echo "<SCRIPT type='text/javascript'> //not showing me this
-        alert('Wrong id or password, please try again.');
-        window.location.replace('index.php');
-        </SCRIPT>";
+    echo '<script type="text/javascript">';
+    echo 'alert("Login fail, please try again.");';
+    echo 'window.location.href = "index.php";';
+    echo '</script>';
   }
 ?>
