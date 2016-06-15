@@ -7,8 +7,30 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Book: <?php echo $_GET["bid"] ?></title>
 <link href="css/bootstrap.min.css" rel="stylesheet">
-<link href="css/info.css" rel="stylesheet">
+<link href="css/signin.css" rel="stylesheet">
 
+<style>
+table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+    text-align: center;
+    color: black;
+}
+th, td {
+    padding: 5px;
+}
+table{
+    width: 60%;
+}
+p{
+  font-size: 16px;
+  color: black; 
+}
+#BookHeading{
+  background-color: white;
+}
+
+</style>
 </head>
 
 <body>
@@ -32,10 +54,19 @@ $BID=$_GET["bid"];
 $obj = $q->getBook($BID,$language);
 $links =  $q->getBookLinks($BID, $language);
 $comments = $q->getBookComments($BID);
+
+// Update user history
+if ($obj->BID != '-'){
+  $user = null;
+  if(isset($_COOKIE['user'])){
+      $user = $_COOKIE['user'];}
+  $q->viewBook($BID,$user);
+}
+
 ?>
 
-<div class="infoHeading">
-Book information
+<div id="BookHeading">
+<font color="orange" size="6">Book information</font>
 </div>
 
 
@@ -49,8 +80,10 @@ Book information
 
 
 
-<div class="languageChoose">
+<div id="rightb">
+<font color="orange" size="5">
 Choose your reading language:
+</font>
 <form action="#" method="post">
 <select name="lang">
  <?php

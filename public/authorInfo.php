@@ -7,8 +7,34 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Author: <?php echo $_GET["aid"] ?></title>
 <link href="css/bootstrap.min.css" rel="stylesheet">
-<link href="css/info.css" rel="stylesheet">
+<link href="css/signin.css" rel="stylesheet">
 
+<style>
+table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+    text-align: center;
+    color: black;
+}
+th, td {
+    padding: 5px;
+}
+table{
+    width: 70%;
+}
+p{
+  font-size: 16px;
+}
+#AuthorDetail{
+    font-size: 17px;
+    width: 70%;
+    
+}
+#AuthorHeading{
+  background-color: white;
+}
+
+</style>
 </head>
 
 <body>
@@ -31,8 +57,8 @@ $AID=$_GET["aid"];
 $obj = $q->getAuthor($AID,$language);
 $comments = $q->getAuthorComments($AID);
 ?>
-<div class="infoHeading">
-Author information
+<div id="AuthorHeading">
+<font color="orange" size="6">Author information</font>
 </div>
 
 <div id="AuthorDetail">
@@ -43,8 +69,10 @@ Author information
 
 
 
-<div class="languageChoose">
+<div id="rightb">
+<font color="orange" size="5">
 Choose your reading language:
+</font>
 <form action="#" method="post">
 <select name="lang">
  <?php
