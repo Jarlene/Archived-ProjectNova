@@ -9,9 +9,9 @@
   $rating = $_POST['rating'];
 
   $updatesql = "update Books
-                Set bid = '$bid',aid = '$aid',gcode = '$gcode',orelease = '$orelease',
-                clicks = '$clicks',rating = '$rating'
-                where bid = '$bid'";
+                Set BID = '$bid',AID = '$aid',GCode = '$gcode',ORelease = '$orelease',
+                Clicks = '$clicks',Rating = '$rating'
+                where BID = '$bid'";
   // echo $updatesql;
   // $result = mysqli_query($connect,$updatesql);
   // var_dump($result);

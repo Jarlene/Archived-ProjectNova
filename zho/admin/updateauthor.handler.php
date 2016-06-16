@@ -6,8 +6,8 @@
   $adesc = $_POST['adesc'];
 
   $updatesql = "update Authors
-                Set adesc = '$adesc', aid = '$aid',aname = '$aname',lcode = '$language'
-                where aid = '$aid' and lcode = '$language'";
+                Set ADesc = '$adesc', AID = '$aid', AName = '$aname',LCode = '$language'
+                where AID = '$aid' and LCode = '$language'";
   //  echo $updatesql;
 
   //  $result = mysqli_query($connect,$updatesql);

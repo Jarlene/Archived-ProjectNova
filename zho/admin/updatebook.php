@@ -21,7 +21,7 @@
                                 value=<?php
                                         require_once('../../headfiles/connect.php');
                                         $bid = $_GET['bid'];
-                                        $queryid = "select bid from books where bid = '$bid'";
+                                        $queryid = "select BID from Books where BID = '$bid'";
                                         $resultid = mysqli_query($connect,$queryid);
                                         $arr = mysqli_fetch_array($resultid);
                                         echo $arr[0];

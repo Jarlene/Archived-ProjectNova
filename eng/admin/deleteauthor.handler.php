@@ -4,7 +4,7 @@
   $lcode = $_GET['lcode'];
   // echo $bid;
 
-  $query = "delete from authors where aid = '$aid' and lcode = '$lcode'";
+  $query = "delete from Authors where AID = '$aid' and LCode = '$lcode'";
   //echo $query;
 
   if(mysqli_query($connect,$query)){

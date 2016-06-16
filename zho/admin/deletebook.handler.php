@@ -3,7 +3,7 @@
   $bid = $_GET['bid'];
   // echo $bid;
 
-  $query = "delete from books where bid = '$bid'";
+  $query = "delete from Books where BID = '$bid'";
   //echo $query;
 
   if(mysqli_query($connect,$query)){

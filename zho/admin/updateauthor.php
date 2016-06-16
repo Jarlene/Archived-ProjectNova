@@ -21,7 +21,7 @@
                   value=<?php
                   require_once('../../headfiles/connect.php');
                   $aid = $_GET['aid'];
-                  $queryid = "select aid from authors where aid = '$aid'";
+                  $queryid = "select AID from Authors where AID = '$aid'";
                   $resultid = mysqli_query($connect,$queryid);
                   $arr = mysqli_fetch_array($resultid);
                   echo $arr[0];
