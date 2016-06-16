@@ -16,6 +16,7 @@
     require_once('../../headfiles/backend_classes_h.php');
     $q = new Query;
     $divbooks = $q->getBooksWithoutAllLang();
+    var_dump($divbooks);
     if($divbooks){
       echo '<div class="alert alert-warning">
               <strong>Warning!</strong> There are books still missing BookDetails in some language: ';
