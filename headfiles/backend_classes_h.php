@@ -531,15 +531,15 @@ class Query {
 	public function getBooksWithoutAllLang(){
 		try{$dbh = _db_connect();
 		$stmt = $dbh->prepare(
-			"SELECT bid
-			from books
-			where bid not in 
+			"SELECT BID
+			from Books
+			where BID NOT in 
 			(
-			select distinct bid
-			from books natural join bookdetails
-			group by bid
+			select distinct BID
+			from Books natural join BookDetails
+			group by BID
 			having count(*) = (select count(*)
-							   from languages))");
+							   from Languages))");
 		$stmt->execute();
 
 		// *Disconnect from the database
