@@ -11,7 +11,7 @@
 </head>
 
 <body>
-<div>
+<div class="container">
   <?php
     require_once('../../headfiles/backend_classes_h.php');
     $q = new Query;
