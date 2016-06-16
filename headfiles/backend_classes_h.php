@@ -532,14 +532,14 @@ class Query {
 		try{$dbh = _db_connect();
 		$stmt = $dbh->prepare(
 			"SELECT bid
-			from books
-			where bid not in 
+			FROM books
+			WHERE bid not IN 
 			(
-			select distinct bid
-			from books natural join bookdetails
-			group by bid
-			having count(*) = (select count(*)
-							   from languages))");
+			SELECT DISTINCT bid
+			FROM books NATURAL JOIN bookdetails
+			GROUP BY bid
+			HAVING count(*) = (SELECT count(*)
+							   FROM languages))");
 		$stmt->execute();
 
 		// *Disconnect from the database
