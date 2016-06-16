@@ -65,7 +65,7 @@
             }
           ?>
           </select>
-          <input type="submit" name="submit" value="submit" />
+          <input type="submit" name="submit" value="操作" />
           </form>
         </div>
       </p>
@@ -124,7 +124,7 @@
         <h5>コメントを追加:</h5>
         <form action="" method="post">
           <textarea name="comment" style="width:100%;height:60px;">コメントを入力してください</textarea>
-          <input type="submit" value="Submit" />
+          <input type="submit" value="追加" />
         </form>
         <?php
           if(isset($_POST['comment'])){

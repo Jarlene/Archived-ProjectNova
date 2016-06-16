@@ -64,7 +64,7 @@
             }
           ?>
           </select>
-          <input type="submit" name="submit" value="submit" />
+          <input type="submit" name="submit" value="生效" />
           </form>
         </div>
       </p>
@@ -143,7 +143,7 @@
         <h5>添加一条新评论:</h5>
         <form action="" method="post">
           <textarea name="comment" style="width:100%;height:60px;">在此输入您的评论</textarea>
-          <input type="submit" value="Submit" />
+          <input type="submit" value="提交" />
         </form>
         <?php
           if(isset($_POST['comment'])){
