@@ -9,8 +9,21 @@
     <link href="../css/signin.css" rel="stylesheet">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
-<body>
 
+<body>
+<div>
+  <?php
+    require_once('../../headfiles/backend_classes_h.php');
+    $q = new Query;
+    $divbooks = $q->getBooksWithoutAllLang();
+    if($divbooks){
+      echo '<div class="alert alert-warning">
+              <strong>Warning!</strong> There are books still missing BookDetails in some language: ';
+      foreach ($divbooks as $b) { echo $b['bid'].', ';}
+      echo '</div>';
+    }
+  ?>
+</div>
 
 <?php
   require_once('../../headfiles/connect.php');

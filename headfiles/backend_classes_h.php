@@ -527,5 +527,26 @@ class Query {
 		
 		return $stmt;
 	}
+
+	public function getBooksWithoutAllLang(){
+		try{$dbh = _db_connect();
+		$stmt = $dbh->prepare(
+			"SELECT bid
+			from books
+			where bid not in 
+			(
+			select distinct bid
+			from books natural join bookdetails
+			group by bid
+			having count(*) = (select count(*)
+							   from languages))");
+		$stmt->execute();
+
+		// *Disconnect from the database
+		_db_commit($dbh);} catch(Exception $e) {_db_error($dbh,$e);}
+		$r=$stmt->fetchAll();
+
+		return $r;	
+	}
 }
 ?>
